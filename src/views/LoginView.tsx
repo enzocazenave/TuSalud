@@ -21,7 +21,7 @@ export default function LoginView() {
       </View>
       
       <View className="flex gap-8 items-center justify-center w-full">
-        <Input label="Usuario" />
+        <Input label="Correo electrónico" />
         <Input label="Contraseña" />
         <Button text="Iniciar sesión" />
       </View>
@@ -30,12 +30,12 @@ export default function LoginView() {
         <TouchableOpacity
           onPress={() => navigation.navigate('Register')}
         >
-          <Text className="text-center text-2xl text-[#006A71]">¿No tienes cuenta? Regístrate</Text>
+          <Text className="text-center text-xl text-[#006A71]">¿No tienes cuenta? Regístrate</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('RecoverPassword')}
         >
-          <Text className="text-center text-2xl text-[#006A71]">Olvidé mi contraseña</Text>
+          <Text className="text-center text-xl text-[#006A71]">Olvidé mi contraseña</Text>
         </TouchableOpacity>
       </View>
     </View>
