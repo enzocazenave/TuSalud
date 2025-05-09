@@ -1,11 +1,11 @@
 import { Text, View } from "react-native";
-import GoBackButton from "../components/ui/GoBackButton";
-import CodeInput from "../components/ui/CodeInput";
+import GoBackButton from "../../components/ui/GoBackButton";
+import CodeInput from "../../components/ui/CodeInput";
 import { useState } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { AuthStackParamList } from "../navigators/AuthStack";
+import { AuthStackParamList } from "../../navigators/AuthStack";
 import { useNavigation } from "@react-navigation/native";
-import Button from "../components/ui/Button";
+import Button from "../../components/ui/Button";
 
 type Navigation = NativeStackNavigationProp<AuthStackParamList>
 

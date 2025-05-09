@@ -8,7 +8,7 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-const useAuth = () => {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   
   if (!context) {

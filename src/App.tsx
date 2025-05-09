@@ -4,16 +4,7 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { AuthProvider } from './context/AuthContext';
-import { NavigationContainer } from '@react-navigation/native';
-import { AuthStack } from './navigators/AuthStack';
-
-const RootNavigation = () => {
-  return (
-    <NavigationContainer>
-      <AuthStack />
-    </NavigationContainer>
-  )
-}
+import { RootNavigation } from './navigators/RootNavigation';
 
 export const App = () => {
   return (

@@ -1,7 +1,7 @@
 import { View } from "react-native";
-import Input from "../components/ui/Input";
-import Button from "../components/ui/Button";
-import GoBackButton from "../components/ui/GoBackButton";
+import Input from "../../components/ui/Input";
+import Button from "../../components/ui/Button";
+import GoBackButton from "../../components/ui/GoBackButton";
 
 export default function RegisterView() {
   return (

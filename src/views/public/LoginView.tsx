@@ -1,22 +1,22 @@
 import { Text, View, TouchableOpacity, Image } from "react-native";
-import Button from "../components/ui/Button";
-import Input from "../components/ui/Input";
+import Button from "../../components/ui/Button";
+import Input from "../../components/ui/Input";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { AuthStackParamList } from "../navigators/AuthStack";
+import { AuthStackParamList } from "../../navigators/AuthStack";
 
 type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 export default function LoginView() {
   const navigation = useNavigation<Navigation>();
-
+  
   return (
     <View className="flex flex-1 gap-12 items-center justify-center px-12">
       <View className="bg-[#006A71] rounded-full">
         <Image
           className="size-36"
           resizeMode="cover"
-          source={require('../assets/logo.png')}
+          source={require('../../assets/logo.png')}
         />
       </View>
       

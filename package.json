@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^7.3.12",
     "@react-navigation/elements": "^2.4.0",
     "@react-navigation/native": "^7.1.7",
     "@react-navigation/native-stack": "^7.3.11",
@@ -18,6 +19,7 @@
     "react": "19.0.0",
     "react-native": "0.79.2",
     "react-native-confirmation-code-field": "^7.4.0",
+    "react-native-css-interop": "^0.1.22",
     "react-native-reanimated": "^3.17.5",
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "^4.10.0",
