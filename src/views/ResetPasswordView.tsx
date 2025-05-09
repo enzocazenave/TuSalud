@@ -2,8 +2,19 @@ import { Text, View } from "react-native";
 import GoBackButton from "../components/ui/GoBackButton";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { AuthStackParamList } from "../navigators/AuthStack";
+import { useNavigation } from "@react-navigation/native";
+
+type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 export default function ResetPasswordView() {
+  const navigation = useNavigation<Navigation>();
+
+  const handleResetCode = () => {
+    navigation.navigate('Login');
+  }
+
   return (
     <View className="flex flex-1 gap-6 items-center px-12 pt-12">
       <GoBackButton absolute={false} />
@@ -16,7 +27,7 @@ export default function ResetPasswordView() {
 
         <Input placeholder="******" label="Contraseña" />
         <Input placeholder="******" label="Repite tu contraseña" />
-        <Button text="Confirmar" />
+        <Button text="Confirmar" onPress={handleResetCode} />
       </View>
 
     </View>
