@@ -26,7 +26,7 @@ export default function RecoverPasswordView() {
       <GoBackButton absolute={false} />
 
       <View className="flex gap-5 justify-center items-center w-full flex-col">
-        <View>
+        <View> 
           <Text className="text-2xl text-[#006A71] font-medium">Recuperar contraseña</Text>
           <Text className="text-[#447f81]">Por favor ingrese su correo electrónico para cambiar su contraseña.</Text>
         </View>
