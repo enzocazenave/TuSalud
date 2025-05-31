@@ -5,14 +5,31 @@ import Button from "../../components/ui/Button";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../../navigators/AuthStack";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../context/AuthContext";
+import { useState } from "react";
 
 type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 export default function ResetPasswordView() {
+  const { confirmResetPassword } = useAuth();
   const navigation = useNavigation<Navigation>();
 
-  const handleResetCode = () => {
-    navigation.navigate('Login');
+  const [form, setForm] = useState({
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (field: string, value: string) => {
+    setForm({ ...form, [field]: value });
+  }
+
+  const handleResetCode = async () => {
+    try {
+      await confirmResetPassword(form.newPassword, form.confirmPassword);
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log(error); // TODO: Handle error
+    }
   }
 
   return (
@@ -25,8 +42,22 @@ export default function ResetPasswordView() {
           <Text className="text-[#447f81]">Ingrese su nueva contraseña.</Text>
         </View>
 
-        <Input placeholder="******" label="Contraseña" />
-        <Input placeholder="******" label="Repite tu contraseña" />
+        <Input 
+          placeholder="******" 
+          label="Contraseña" 
+          onChange={handleChange} 
+          value={form.newPassword} 
+          name="newPassword" 
+          secureTextEntry
+        />
+        <Input 
+          placeholder="******" 
+          label="Repite tu contraseña" 
+          onChange={handleChange} 
+          value={form.confirmPassword} 
+          name="confirmPassword" 
+          secureTextEntry
+        />
         <Button text="Confirmar" onPress={handleResetCode} />
       </View>
 

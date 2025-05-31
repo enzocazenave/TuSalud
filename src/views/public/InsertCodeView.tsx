@@ -6,10 +6,12 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../../navigators/AuthStack";
 import { useNavigation } from "@react-navigation/native";
 import Button from "../../components/ui/Button";
+import { useAuth } from "../../context/AuthContext";
 
 type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 export default function RecoverPasswordView() {
+  const { validateResetPasswordCode } = useAuth();
   const navigation = useNavigation<Navigation>();
   const [code, setCode] = useState<string>('');
 
@@ -18,7 +20,12 @@ export default function RecoverPasswordView() {
   }
 
   const handleVerifyCode = async () => {
-    navigation.navigate('ResetPassword')
+    try {
+      await validateResetPasswordCode(code);
+      navigation.navigate('ResetPassword');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
