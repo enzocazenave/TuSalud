@@ -4,12 +4,28 @@ import Input from "../../components/ui/Input";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../../navigators/AuthStack";
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 export default function LoginView() {
+  const { login } = useAuth();
   const navigation = useNavigation<Navigation>();
-  
+
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (field: string, value: string) => {
+    setCredentials((prev) => ({ ...prev, [field]: value }));
+  }
+
+  const handleSubmit = async () => {
+    await login(credentials.email, credentials.password);
+  }
+
   return (
     <View className="flex flex-1 gap-12 items-center justify-center px-12">
       <View className="bg-[#006A71] rounded-full">
@@ -21,9 +37,23 @@ export default function LoginView() {
       </View>
       
       <View className="flex gap-8 items-center justify-center w-full">
-        <Input label="Correo electrónico" />
-        <Input label="Contraseña" />
-        <Button text="Iniciar sesión" />
+        <Input 
+          label="Correo electrónico" 
+          value={credentials.email} 
+          onChange={handleChange}
+          name="email"
+        />
+        <Input 
+          label="Contraseña" 
+          value={credentials.password} 
+          onChange={handleChange}
+          name="password"
+          secureTextEntry
+        />
+        <Button 
+          text="Iniciar sesión" 
+          onPress={handleSubmit} 
+        />
       </View>
 
       <View className="flex flex-col gap-4">
