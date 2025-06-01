@@ -3,7 +3,7 @@ import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { AuthStackParamList } from "../../navigators/AuthStack";
+import { AuthStackParamList } from "../../navigators/AuthStackNavigator";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
