@@ -3,7 +3,16 @@ import { Bell, MenuIcon } from "lucide-react-native";
 
 export default function Header({ navigation }: { navigation: any }) {
   return (
-    <View className="bg-secondary py-[10px] flex-row justify-between items-center px-4 border-b border-b-primary">
+    <View
+      className="bg-secondary py-[10px] flex-row justify-between items-center px-4 border-b border-b-primary" 
+      style={{ 
+        elevation: 10, 
+        shadowColor: '#000', 
+        shadowOffset: { width: 0, height: 2 }, 
+        shadowOpacity: 0.25, 
+        shadowRadius: 3.84 
+      }}
+    >
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
         <MenuIcon size={40} color="#006A71" stroke="#006A71" />
       </TouchableOpacity>

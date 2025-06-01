@@ -8,19 +8,21 @@ type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 interface Props {
   absolute?: boolean;
+  callback?: () => void;
 }
 
-export default function GoBackButton({ absolute }: Props) {
+export default function GoBackButton({ absolute, callback }: Props) {
   const navigation = useNavigation<Navigation>();
 
   const handleGoBack = () => {
     if (navigation.canGoBack()) {
+      callback?.();
       navigation.goBack();
     }
   }
 
   return (
-    <View className={`${absolute ? 'absolute left-0 top-8 ps-12' : ''} w-full`}>
+    <View className={`${absolute ? 'absolute left-0 top-8 ps-12' : ''}`}>
       <TouchableOpacity 
         className="p-2 bg-primary w-12 h-12 flex justify-center items-center rounded-full" 
         onPress={handleGoBack}

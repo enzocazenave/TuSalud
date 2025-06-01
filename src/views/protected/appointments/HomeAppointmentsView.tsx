@@ -2,7 +2,7 @@ import { Calendar, CalendarPlus, History } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { type NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { type MyAppointmentsStackParamList } from "../MyAppointmentsView";
+import { type MyAppointmentsStackParamList } from "../appointments/MyAppointmentsView";
 
 type Navigation = NativeStackNavigationProp<MyAppointmentsStackParamList>
 
@@ -16,7 +16,7 @@ export default function HomeAppointmentsView() {
       <View className="gap-4">
         <TouchableOpacity 
           className="rounded-[20px] flex-row gap-6 items-center bg-secondary border border-primary p-6"
-          onPress={() => navigation.navigate('NewAppointment')}
+          onPress={() => navigation.navigate('NewAppointmentSelectPrepaid')}
         >
           <CalendarPlus size={20} color="#006A71" />
           <Text className="text-primary text-xl font-medium">Reservar nuevo turno</Text>

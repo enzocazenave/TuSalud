@@ -27,8 +27,8 @@ export default function AppointmentCard({ appointment }: Props) {
         </View>
 
         <View>
-          <Text className="text-primary text-lg font-bold">{appointment.professional.full_name}</Text>
-          <Text className="text-primary text-[15px]">{appointment.specialty.name}</Text>
+          <Text className="text-primary text-lg font-bold">{appointment?.professional?.full_name}</Text>
+          <Text className="text-primary text-[15px]">{appointment?.specialty?.name}</Text>
         </View>
       </View>
 
