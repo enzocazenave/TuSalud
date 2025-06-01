@@ -30,7 +30,9 @@ export default function RecoverPasswordView() {
 
   return (
     <View className="flex flex-1 gap-6 items-center px-12 pt-12">
-      <GoBackButton absolute={false} />
+      <View className="w-full">
+        <GoBackButton absolute={false} />
+      </View>
 
       <View className="flex gap-5 justify-center items-center w-full flex-col">
         <View> 
