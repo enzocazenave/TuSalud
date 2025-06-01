@@ -1,9 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeView from '../views/protected/HomeView';
 import ProfileView from '../views/protected/ProfileView';
-import MyAppointmentsView from '../views/protected/MyAppointmentsView';
+import MyAppointmentsView from '../views/protected/appointments/MyAppointmentsView';
 import { Home, Calendar, User } from 'lucide-react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { View, ViewStyle } from 'react-native';
 import React from 'react';
 
@@ -21,73 +20,60 @@ const tabBarIconStyle: ViewStyle = {
   elevation: 2,
   alignItems: 'center',
   justifyContent: 'center',
+  borderWidth: 1,
+  borderColor: '#006A71'
 };
 
 export const BottomTabNavigator = () => {
-  const { bottom } = useSafeAreaInsets();
-
   return (
-    <>
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 50 + bottom,
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: {
           backgroundColor: '#9ACBD0',
-          zIndex: -1,
+          elevation: 0,
+          height: 50,
+          borderTopWidth: 1,
+          borderColor: '#006A71'
+        },
+        tabBarActiveTintColor: '#fff',
+        tabBarInactiveTintColor: '#006A71',
+        tabBarShowLabel: false,
+        headerShown: false,
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeView}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <View style={[tabBarIconStyle, focused && { backgroundColor: '#48A6A7' }]}>
+              <Home color={color} size={40} />
+            </View>
+          ),
         }}
       />
-
-      <Tab.Navigator
-        screenOptions={{
-          tabBarStyle: {
-            backgroundColor: 'transparent',
-            borderTopWidth: 0,
-            elevation: 0,
-            height: 20 + bottom,
-          },
-          tabBarActiveTintColor: '#006A71',
-          tabBarInactiveTintColor: '#6c9294',
-          tabBarShowLabel: false,
-          headerShown: false,
+      <Tab.Screen
+        name="MyAppointments"
+        component={MyAppointmentsView}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <View style={[tabBarIconStyle, focused && { backgroundColor: '#48A6A7' }]}>
+              <Calendar color={color} size={40} />
+            </View>
+          ),
         }}
-      >
-        <Tab.Screen
-          name="Home"
-          component={HomeView}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <View style={tabBarIconStyle}>
-                <Home color={color} size={40} />
-              </View>
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="MyAppointments"
-          component={MyAppointmentsView}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <View style={tabBarIconStyle}>
-                <Calendar color={color} size={40} />
-              </View>
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={ProfileView}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <View style={tabBarIconStyle}>
-                <User color={color} size={40} />
-              </View>
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </>
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileView}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <View style={[tabBarIconStyle, focused && { backgroundColor: '#48A6A7' }]}>
+              <User color={color} size={40} />
+            </View>
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };

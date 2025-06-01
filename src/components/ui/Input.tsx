@@ -18,13 +18,13 @@ export default function Input({
   secureTextEntry
 }: Props) {
   return (
-    <View className="flex flex-col gap-3 w-full">
-      <Text className="text-xl text-[#006A71]">{label}</Text>
+    <View className="flex flex-col gap-2 w-full">
+      <Text className="text-xl text-primary">{label}</Text>
       <TextInput
         placeholder={placeholder}
         onChangeText={(text) => onChange?.(name, text)}
         value={value}
-        className="bg-[#9ACBD0] rounded-lg border border-[#006A71] ps-4 shadow-md shadow-black"
+        className="bg-secondary rounded-lg border border-primary ps-4 shadow-md shadow-black"
         secureTextEntry={secureTextEntry}
         autoCapitalize={secureTextEntry ? "none" : "sentences"}
         autoCorrect={!secureTextEntry}

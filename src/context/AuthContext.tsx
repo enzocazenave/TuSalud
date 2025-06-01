@@ -6,7 +6,7 @@ type AuthContextType = {
   isAuthenticated: boolean;
   register: (fullName: string, email: string, password: string, confirmPassword: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   requestRecoverPassword: (email: string) => Promise<void>;
   validateResetPasswordCode: (code: string) => Promise<void>;
   confirmResetPassword: (newPassword: string, confirmPassword: string) => Promise<void>;
@@ -37,9 +37,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const checkAuth = async () => {
       const accessToken = await AsyncStorage.getItem('accessToken');
-      setIsAuthenticated(!!accessToken);
+      const patientId = await AsyncStorage.getItem('patientId');
+      setIsAuthenticated(!!accessToken && !!patientId);
       setIsLoading(false);
     }
+    
     checkAuth();
   }, []);
 
@@ -51,9 +53,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       setIsLoading(true);
       const response = await backend.post('/auth/register', { fullName, email, password, roleId: 1 });
-      const accessToken = response.data.data.token;
+      const { token, userId } = response.data.data;
 
-      await AsyncStorage.setItem('accessToken', accessToken);
+      await AsyncStorage.setItem('accessToken', token);
+      await AsyncStorage.setItem('patientId', userId.toString());
       setIsAuthenticated(true);
     } catch (error) {
       console.log(error); // TODO: Handle error
@@ -66,9 +69,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       setIsLoading(true);
       const response = await backend.post('/auth/login', { email, password });
-      const accessToken = response.data.data.token;
+      const { token, userId } = response.data.data;
 
-      await AsyncStorage.setItem('accessToken', accessToken);
+      await AsyncStorage.setItem('accessToken', token);
+      await AsyncStorage.setItem('patientId', userId.toString());
       setIsAuthenticated(true);
     } catch (error) {
       console.log(error); // TODO: Handle error
@@ -82,6 +86,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(true);
       await backend.post("/auth/logout");
       await AsyncStorage.removeItem('accessToken');
+      await AsyncStorage.removeItem('patientId');
       setIsAuthenticated(false);
     } catch (error) {
       console.log(error); // TODO: Handle error
@@ -147,7 +152,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ 
-      isAuthenticated, register, login, logout, requestRecoverPassword, confirmResetPassword, validateResetPasswordCode, isLoading 
+      isAuthenticated, register, login, logout, requestRecoverPassword, confirmResetPassword, validateResetPasswordCode, isLoading
     }}>
       {children}
     </AuthContext.Provider>

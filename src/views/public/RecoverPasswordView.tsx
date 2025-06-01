@@ -3,7 +3,7 @@ import GoBackButton from "../../components/ui/GoBackButton";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import { useNavigation } from "@react-navigation/native";
-import { AuthStackParamList } from "../../navigators/AuthStack";
+import { AuthStackParamList } from "../../navigators/AuthStackNavigator";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
