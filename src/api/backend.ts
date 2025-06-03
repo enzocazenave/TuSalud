@@ -44,12 +44,10 @@ backend.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry && !shouldSkipRefresh) {
       if (isRefreshing) {
-        return new Promise((resolve, reject) => {
+        return new Promise<string>((resolve, reject) => {
           failedQueue.push({ resolve, reject })
         })
-          .then((response: any) => {
-            const token = response?.data?.data.token;
-
+          .then((token: string) => {
             if (token) {
               originalRequest.headers['Authorization'] = `Bearer ${token}`;
               return backend(originalRequest);

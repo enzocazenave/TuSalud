@@ -3,7 +3,7 @@ export type PatientAppointment = {
   date: string;
   start_time: string;
   end_time: string;
-  status: string;
+  appointment_state_id: number;
   notes: string | null;
   specialty: {
     name: string;

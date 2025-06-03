@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import useAppointments from '../../hooks/useAppointments';
 import { PatientAppointment } from '../../types/PatientAppointment';
 import SmallAppointmentCard from './SmallAppointmentCard';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface DayItem {
   date: string;
@@ -40,9 +41,11 @@ export default function WeeklySchedule() {
 
   const { getAppointmentsByDate, isLoading } = useAppointments()
 
-  useEffect(() => {
-    getAppointmentsByDate(selectedDate).then(setAppointments)
-  }, [selectedDate])
+  useFocusEffect(
+    useCallback(() => {
+      getAppointmentsByDate(selectedDate).then(setAppointments)
+    }, [selectedDate])
+  )
 
   const days = generateWeek(weekStartDate);
 
@@ -67,7 +70,7 @@ export default function WeeklySchedule() {
   };
 
   const handleDayPress = async (date: string) => {
-    setSelectedDate(date)
+    setSelectedDate(date);
   }
 
   return (

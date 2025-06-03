@@ -6,9 +6,13 @@ import NewAppointmentSelectSpecialityView from './NewAppointmentSelectSpeciality
 import NewAppointmentSelectProfessionalView from './NewAppointmentSelectProfessionalView';
 import NewAppointmentSelectDateAndHour from './NewAppointmentSelectDateAndHour';
 import NewAppointmentConfirmView from './NewAppointmentConfirmView';
+import MyNextAppointmentsView from './MyNextAppointmentsView';
+import AllAppointmentsView from './AllAppointmentsView';
 
 export type MyAppointmentsStackParamList = {
   Home: undefined;
+  NextAppointments: undefined;
+  AllAppointments: undefined;
   NewAppointmentSelectPrepaid: undefined;
   NewAppointmentSelectSpeciality: undefined;
   NewAppointmentSelectProfessional: undefined;
@@ -29,6 +33,14 @@ export default function MyAppointmentsView() {
         <Stack.Screen
           name="Home"
           component={HomeAppointmentsView}
+        />
+        <Stack.Screen
+          name="NextAppointments"
+          component={MyNextAppointmentsView}
+        />
+        <Stack.Screen
+          name="AllAppointments"
+          component={AllAppointmentsView}
         />
         <Stack.Screen
           name="NewAppointmentSelectPrepaid"
