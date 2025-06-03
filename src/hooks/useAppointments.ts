@@ -7,18 +7,28 @@ interface UseAppointments {
   isLoading: {
     moreRecentAppointment: boolean
     appointmentsByDate: boolean
-    createAppointment: boolean
+    createAppointment: boolean,
+    nextAppointments: boolean,
+    deleteAppointment: boolean,
+    appointments: boolean
   }
+
   getMoreRecentAppointment: () => Promise<PatientAppointment>
   getAppointmentsByDate: (date: string) => Promise<PatientAppointment[]>
   createAppointment: (appointment: any) => Promise<PatientAppointment>
+  getNextAppointments: () => Promise<PatientAppointment[]>
+  deleteAppointmentById: (appointmentId: number) => Promise<void>
+  getAppointments: () => Promise<PatientAppointment[]>
 }
 
 export default function useAppointments(): UseAppointments {
   const [isLoading, setIsLoading] = useState({
     moreRecentAppointment: false,
     appointmentsByDate: false,
-    createAppointment: false
+    createAppointment: false,
+    nextAppointments: false,
+    deleteAppointment: false,
+    appointments: false
   })
 
   const handleLoading = (key: keyof typeof isLoading, value: boolean) => {
@@ -45,12 +55,18 @@ export default function useAppointments(): UseAppointments {
       const response = await backend.get(`/appointments/patients/${patientId}`, {
         params: {
           startDate: date,
-          endDate: date
+          endDate: date,
+          appointmentStateId: 1
         }
       })
-      return response.data.data
+      
+      const sortedAppointments = response.data.data.sort((a: any, b: any) => 
+        a.start_time.localeCompare(b.start_time)
+      )
+
+      return sortedAppointments
     } catch (error) {
-      console.log(error) //TODO: Handle error
+      console.log(error)
     } finally {
       handleLoading('appointmentsByDate', false)
     }
@@ -75,10 +91,57 @@ export default function useAppointments(): UseAppointments {
     }
   }
 
+  const getNextAppointments = async () => {
+    try {
+      handleLoading('nextAppointments', true)
+      const patientId = await AsyncStorage.getItem('patientId');
+      const response = await backend.get(`/appointments/patients/${patientId}`, {
+        params: {
+          startDate: new Date().toISOString().split('T')[0],
+          appointmentStateId: 1
+        }
+      })
+      return response.data.data
+    } catch (error) {
+      console.log(error)
+    } finally {
+      handleLoading('nextAppointments', false)
+    }
+  }
+
+  const deleteAppointmentById = async (appointmentId: number) => {
+    try {
+      handleLoading('deleteAppointment', true)
+      
+      const response = await backend.delete(`/appointments/${appointmentId}`)
+      return response.data
+    } catch (error) {
+      console.log(error)
+    } finally {
+      handleLoading('deleteAppointment', false)
+    }
+  }
+
+  const getAppointments = async () => {
+    try {
+      handleLoading('appointments', true)
+      const patientId = await AsyncStorage.getItem('patientId');
+      const response = await backend.get(`/appointments/patients/${patientId}`)
+      return response.data.data
+    } catch (error) {
+      console.log(error)
+    } finally {
+      handleLoading('appointments', false)
+    }
+  }
+
   return {
     getMoreRecentAppointment,
     getAppointmentsByDate,
     createAppointment,
+    getNextAppointments,
+    deleteAppointmentById,
+    getAppointments,
     isLoading
   }
 }

@@ -43,7 +43,7 @@ export default function NewAppointmentConfirmView() {
         onPress={handleConfirmAppointment}
         className={`bg-secondary flex-row gap-2 items-center justify-center rounded-lg px-6 py-3 border-2 border-primary ${isLoading.createAppointment ? 'opacity-50' : ''}`}
       >
-        {isLoading.createAppointment && <ActivityIndicator size="large" color="#006A71" />}
+        {isLoading.createAppointment && <ActivityIndicator size="small" color="#006A71" />}
         <Text className="text-xl text-primary text-center">Confirmar turno</Text>
       </TouchableOpacity>
     </View>

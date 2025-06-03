@@ -2,7 +2,7 @@ import { Calendar, CalendarPlus, History } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { type NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { type MyAppointmentsStackParamList } from "../appointments/MyAppointmentsView";
+import { type MyAppointmentsStackParamList } from "./MyAppointmentsView";
 
 type Navigation = NativeStackNavigationProp<MyAppointmentsStackParamList>
 
@@ -22,12 +22,18 @@ export default function HomeAppointmentsView() {
           <Text className="text-primary text-xl font-medium">Reservar nuevo turno</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity className="rounded-[20px] flex-row gap-6 items-center bg-secondary/20 border border-primary p-6">
+        <TouchableOpacity 
+          className="rounded-[20px] flex-row gap-6 items-center bg-secondary/20 border border-primary p-6"
+          onPress={() => navigation.navigate('NextAppointments')}
+        >
           <Calendar size={20} color="#006A71" />
           <Text className="text-primary text-xl font-medium">Ver turnos próximos</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity className="rounded-[20px] flex-row gap-6 items-center bg-secondary/20 border border-primary p-6">
+        <TouchableOpacity 
+          className="rounded-[20px] flex-row gap-6 items-center bg-secondary/20 border border-primary p-6"
+          onPress={() => navigation.navigate('AllAppointments')}
+        >
           <History size={20} color="#006A71" />
           <Text className="text-primary text-xl font-medium">Ver historial de turnos</Text>
         </TouchableOpacity>

@@ -1,12 +1,20 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { type PatientAppointment } from "../../types/PatientAppointment";
-import { User, Calendar, Clock } from "lucide-react-native";
-
+import { User, Calendar, Clock, Trash } from "lucide-react-native";
+import useAppointments from "../../hooks/useAppointments";
+import React from "react";
+import useConfirmationModal from "../../hooks/useConfirmationModal";
 interface Props {
   appointment: PatientAppointment;
+  hasDeleteButton?: boolean;
+  onDelete?: () => void;
+  isHistory?: boolean;
 }
 
-export default function AppointmentCard({ appointment }: Props) {
+export default function AppointmentCard({ appointment, hasDeleteButton = false, onDelete, isHistory = false }: Props) {
+  const { showConfirmation, Confirmation } = useConfirmationModal()
+  const { deleteAppointmentById } = useAppointments()
+
   const formattedDate = new Date(appointment.date).toLocaleDateString('es-AR', {
     day: '2-digit',
     month: '2-digit', 
@@ -19,8 +27,52 @@ export default function AppointmentCard({ appointment }: Props) {
     hour12: false
   });
 
+
+  const handleDeleteAppointment = async () => {
+    const confirmed = await showConfirmation({
+      title: "Eliminar turno",
+      message: "¿Estás seguro de querer eliminar este turno?",
+      confirmText: "Eliminar"
+    })
+
+    if (confirmed) {
+      await deleteAppointmentById(appointment.id)
+      onDelete?.()
+    }
+  }
+  
   return (
-    <View className="bg-secondary rounded-[20px] p-5 gap-4">
+    <View className="bg-secondary rounded-[20px] p-5 gap-4 relative">
+      {isHistory && (
+        <>
+          {appointment.appointment_state_id === 1 && (
+            <View className="justify-start items-start">
+              <Text className="bg-primary w-fit px-2 py-0 rounded-lg text-secondary font-semibold">Reservado</Text>
+            </View>
+          )}
+          {appointment.appointment_state_id === 2 && (
+            <View className="justify-start items-start">
+              <Text className="bg-red-500/60 w-fit px-2 py-0 rounded-lg text-black font-semibold">Cancelado</Text>
+            </View>
+          )}
+          {appointment.appointment_state_id === 3 && (
+            <View className="justify-start items-start">
+              <Text className="bg-green-500/60 w-fit px-2 py-0 rounded-lg text-black font-semibold">Completado</Text>
+            </View>
+          )}
+        </>
+      )}
+
+      {hasDeleteButton && appointment.appointment_state_id === 1 && (
+        <>
+          <TouchableOpacity onPress={handleDeleteAppointment} className="absolute top-5 right-5 p-3 rounded-full bg-primary/20">
+            <Trash size={20} color="#006A71" />
+          </TouchableOpacity>
+
+          <Confirmation />
+        </>
+      )}
+
       <View className="flex-row gap-4 items-center">
         <View className="bg-[#006A71] rounded-full p-2">
           <User size={30} color="#9ACBD0" />
