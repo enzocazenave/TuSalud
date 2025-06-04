@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { NativeWindStyleSheet } from 'nativewind';
+import { useColorScheme } from 'nativewind';
 
 export type Theme = 'light' | 'dark';
 
@@ -15,11 +15,12 @@ const ThemeContext = createContext<ThemeContextState>({
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>('light');
+  const { setColorScheme } = useColorScheme();
 
   const toggleTheme = () => {
     const newTheme: Theme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    NativeWindStyleSheet.setColorScheme(newTheme);
+    setColorScheme(newTheme);
   };
 
   return (
