@@ -5,6 +5,7 @@ import { BottomTabNavigator } from "./BottomTabNavigator";
 import DoctorsView from "../views/protected/DoctorsView";
 import Header from "../components/layout/Header";
 import { useAuth } from "../context/AuthContext";
+import MedicalRecordView from "../views/protected/MedicalRecordView";
 
 const Drawer = createDrawerNavigator();
 
@@ -18,6 +19,7 @@ export const DrawerNavigator = () => {
     >
       <Drawer.Screen name="MainTabs" component={BottomTabNavigator} options={{ title: "Inicio" }} />
       <Drawer.Screen name="Doctors" component={DoctorsView} />
+      <Drawer.Screen name="MedicalRecord" component={MedicalRecordView} />
     </Drawer.Navigator>
   );
 };
@@ -70,7 +72,7 @@ const CustomDrawerContent = ({ navigation }: { navigation: any }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => navigation.navigate("MedicalRecord")}
           className="flex-row items-center gap-3 px-5 py-4 border-b border-[#006A71]"
         >
           <FileText color="#006A71" size={25} />
