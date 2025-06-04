@@ -115,7 +115,7 @@ const ProfessionalItem = ({ item }: { item: any }) => {
               });
 
               return (
-                <View className="flex-row items-center justify-between">
+                <View key={schedule.id} className="flex-row items-center justify-between">
                   <Text className="text-tertiary text-lg font-semibold">{schedule.day_of_week}</Text>
                   <Text className="text-tertiary text-lg">{formattedStartTime} - {formattedEndTime}</Text>
                 </View>
