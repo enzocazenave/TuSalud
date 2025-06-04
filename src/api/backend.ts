@@ -15,7 +15,7 @@ const getBaseURL = (): string => {
   if (isAndroidEmulator) return 'http://10.0.2.2:3000';
   if (isIOSSimulator) return 'http://localhost:3000';
 
-  return 'http://localhost:3000';
+  return 'http://10.0.2.2:3000';
 };
 
 console.log(getBaseURL());

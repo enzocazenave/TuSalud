@@ -1,4 +1,5 @@
 import { createDrawerNavigator, DrawerContentScrollView } from "@react-navigation/drawer";
+
 import { Text, TouchableOpacity, View, Switch } from "react-native";
 import { BookOpen, Calendar, FileText, Home, LogOut, User, Moon } from "lucide-react-native";
 import { BottomTabNavigator } from "./BottomTabNavigator";
@@ -7,6 +8,7 @@ import Header from "../components/layout/Header";
 import { useAuth } from "../context/AuthContext";
 import MedicalRecordView from "../views/protected/MedicalRecordView";
 import NotificationsView from "../views/protected/NotificationsView";
+import ThemeSettingsView from "../views/protected/ThemeSettingsView";
 import { useTheme } from "../context/ThemeContext";
 
 const Drawer = createDrawerNavigator();
@@ -23,6 +25,7 @@ export const DrawerNavigator = () => {
       <Drawer.Screen name="Doctors" component={DoctorsView} />
       <Drawer.Screen name="MedicalRecord" component={MedicalRecordView} />
       <Drawer.Screen name="Notifications" component={NotificationsView} />
+      <Drawer.Screen name="ThemeSettings" component={ThemeSettingsView} options={{ title: 'Tema' }} />
     </Drawer.Navigator>
   );
 };
@@ -81,6 +84,14 @@ const CustomDrawerContent = ({ navigation }: { navigation: any }) => {
         >
           <FileText color={theme === 'dark' ? '#5CC8D7' : '#006A71'} size={25} />
           <Text className="text-[#006A71] dark:text-darkprimary text-lg">Historia clínica</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ThemeSettings')}
+          className="flex-row items-center gap-3 px-5 py-4 border-b border-[#006A71] dark:border-darkprimary"
+        >
+          <Moon color={theme === 'dark' ? '#5CC8D7' : '#006A71'} size={25} />
+          <Text className="text-[#006A71] dark:text-darkprimary text-lg">Tema</Text>
         </TouchableOpacity>
 
         <View className="flex-row items-center justify-between px-5 py-4 border-b border-[#006A71] dark:border-darkprimary">
