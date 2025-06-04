@@ -5,6 +5,7 @@ export default function useProfessionals() {
   const [isLoading, setIsLoading] = useState({
     professionalsBySpecialty: false,
     professionalAvailability: false,
+    professionalSchedules: false
   })
 
   const handleLoading = (key: keyof typeof isLoading, value: boolean) => {
@@ -41,11 +42,24 @@ export default function useProfessionals() {
       handleLoading('professionalAvailability', false)
     }
   }
+
+  const getProfessionalSchedules = async (professionalId: number) => {
+    try {
+      handleLoading('professionalSchedules', true)
+      const response = await backend.get(`/schedules/${professionalId}`)
+      return response.data.data
+    } catch (error) {
+      return []
+    } finally {
+      handleLoading('professionalSchedules', false)
+    }
+  }
  
   return {
     isLoading,
     handleLoading,
     getProfessionalsBySpecialty,
-    getProfessionalAvailability
+    getProfessionalAvailability,
+    getProfessionalSchedules
   }
 }

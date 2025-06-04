@@ -29,6 +29,7 @@ export default function MyAppointmentsView() {
         screenOptions={{
           headerShown: false
         }}
+        initialRouteName="Home"
       >
         <Stack.Screen
           name="Home"

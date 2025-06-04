@@ -5,13 +5,11 @@ import MyAppointmentsView from '../views/protected/appointments/MyAppointmentsVi
 import { Home, Calendar, User } from 'lucide-react-native';
 import { View, ViewStyle } from 'react-native';
 import React from 'react';
-import MedicalRecordView from '../views/protected/MedicalRecordView';
 
 export type BottomTabParamList = {
   Home: undefined;
   MyAppointments: { screen: 'NextAppointments' | 'NewAppointmentSelectPrepaid' | 'NewAppointmentSelectSpeciality' | 'NewAppointmentSelectProfessional' | 'NewAppointmentSelectDateAndHour' | 'NewAppointmentConfirm' } | undefined;
   Profile: undefined;
-  MedicalRecord: undefined;
 }
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();

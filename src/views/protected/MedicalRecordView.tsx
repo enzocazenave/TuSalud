@@ -1,7 +1,7 @@
 import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, Linking } from "react-native";
 import GoBackButton from "../../components/ui/GoBackButton";
 import useMedicalRecords from "../../hooks/useMedicalRecords";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Calendar, FileText, User } from "lucide-react-native";
 import { formatUtcToLocalDateTime } from "../../utils/date";
