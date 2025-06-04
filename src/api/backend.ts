@@ -1,8 +1,25 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { type AxiosResponse, type AxiosInstance } from "axios";
+import { Platform, NativeModules } from "react-native";
+
+const isAndroid = Platform.OS === 'android';
+const isIOS = Platform.OS === 'ios';
+
+const getBaseURL = (): string => {
+  const platformConstants = NativeModules?.PlatformConstants;
+
+  const isAndroidEmulator = isAndroid && platformConstants?.Fingerprint?.includes?.('generic');
+
+  const isIOSSimulator = isIOS && platformConstants?.model?.includes?.('Simulator');
+
+  if (isAndroidEmulator) return 'http://10.0.2.2:3000';
+  if (isIOSSimulator) return 'http://localhost:3000';
+
+  return 'http://192.168.0.170:3000';
+};
 
 const backend: AxiosInstance = axios.create({
-  baseURL: 'http://10.0.2.2:3000',
+  baseURL: getBaseURL(),
   withCredentials: true,
 });
 

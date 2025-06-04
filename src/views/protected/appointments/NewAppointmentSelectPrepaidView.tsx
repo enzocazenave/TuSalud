@@ -22,7 +22,9 @@ export default function NewAppointmentSelectPrepaidView() {
 
   useEffect(() => {
     getUserPrepaids().then(data => {
-      setUserPrepaidAffiliation(data[0])
+      if (data.length > 0) {
+        setUserPrepaidAffiliation(data[0])
+      }
     })
   }, [])
 
@@ -44,16 +46,21 @@ export default function NewAppointmentSelectPrepaidView() {
       <View className="gap-4">
         <Text className="text-3xl text-primary font-bold">Seleccionar cobertura</Text>
 
-        <TouchableOpacity 
-          onPress={() => handleSelectPrepaid(userPrepaidAffiliation)} 
-          className={`flex-row items-center border gap-4 px-4 py-2 ${prepaidAffiliation?.prepaid?.name === userPrepaidAffiliation?.prepaid?.name ? 'bg-secondary/50 border-primary' : 'bg-secondary/30 border-transparent'}`}
-        >
-          {prepaidAffiliation?.prepaid?.name === userPrepaidAffiliation?.prepaid?.name
-            ? <CircleCheck size={20} color="#006A71" />
-            : <Circle size={20} color="#006A71" />
-          }
-          <Text className="text-primary text-lg">{userPrepaidAffiliation?.prepaid?.name}</Text>
-        </TouchableOpacity>
+        {
+          userPrepaidAffiliation?.prepaid?.name && (
+            <TouchableOpacity 
+              onPress={() => handleSelectPrepaid(userPrepaidAffiliation)} 
+              className={`flex-row items-center border gap-4 px-4 py-2 ${prepaidAffiliation?.prepaid?.name === userPrepaidAffiliation?.prepaid?.name ? 'bg-secondary/50 border-primary' : 'bg-secondary/30 border-transparent'}`}
+            >
+              {prepaidAffiliation?.prepaid?.name === userPrepaidAffiliation?.prepaid?.name
+                ? <CircleCheck size={20} color="#006A71" />
+                : <Circle size={20} color="#006A71" />
+              }
+
+              <Text className="text-primary text-lg">{userPrepaidAffiliation?.prepaid?.name}</Text>
+            </TouchableOpacity>
+          )
+        }
 
         <TouchableOpacity 
           onPress={() => handleSelectPrepaid({
@@ -67,6 +74,7 @@ export default function NewAppointmentSelectPrepaidView() {
             ? <CircleCheck size={20} color="#006A71" />
             : <Circle size={20} color="#006A71" />
           }
+          
           <Text className="text-primary text-lg">Particular</Text>
         </TouchableOpacity>
       </View>

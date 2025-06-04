@@ -1,4 +1,5 @@
 import { View, Text, TextInput } from "react-native";
+import { Platform } from "react-native";
 
 interface Props {
   placeholder?: string;
@@ -24,10 +25,16 @@ export default function Input({
         placeholder={placeholder}
         onChangeText={(text) => onChange?.(name, text)}
         value={value}
-        className="bg-secondary rounded-lg border border-primary ps-4 shadow-md shadow-black"
+        className={`
+          bg-secondary rounded-lg border border-primary 
+          shadow-md shadow-black
+          ${Platform.OS === 'ios' ? 'pl-4' : 'pl-3'} 
+          ${Platform.OS === "ios" ? 'py-3' : ''}
+        `}
         secureTextEntry={secureTextEntry}
-        autoCapitalize={secureTextEntry ? "none" : "sentences"}
+        autoCapitalize={secureTextEntry || label === "Correo electrónico" ? "none" : "sentences"}
         autoCorrect={!secureTextEntry}
+        autoComplete="off"
       />
     </View>
   )

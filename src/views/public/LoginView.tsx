@@ -37,6 +37,8 @@ export default function LoginView() {
       </View>
       
       <View className="flex gap-8 items-center justify-center w-full">
+        <Text className="text-center text-2xl text-primary font-bold">Iniciar sesión</Text>
+        
         <Input 
           label="Correo electrónico" 
           value={credentials.email} 

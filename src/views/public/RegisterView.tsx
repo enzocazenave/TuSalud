@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import GoBackButton from "../../components/ui/GoBackButton";
@@ -28,6 +28,8 @@ export default function RegisterView() {
       <GoBackButton absolute />
 
       <View className="flex gap-8 items-center justify-center w-full">
+        <Text className="text-center text-2xl text-primary font-bold">Crear cuenta</Text>
+        
         <Input 
           placeholder="John Doe" 
           label="Nombre completo"

@@ -1,9 +1,11 @@
 import { Text, View } from "react-native";
 import { useNewAppointment } from "../../context/NewAppointmentContext";
 import { Calendar, Check, Clock } from "lucide-react-native";
+import { formatUtcToLocalDateTime, getUserTimeZone } from "../../utils/date";
 
 export default function NewAppointmentStatus() {
-  const { prepaidAffiliation, specialty, professional, slot } = useNewAppointment()
+  const { prepaidAffiliation, specialty, professional, slot } = useNewAppointment();
+  const timeZone = getUserTimeZone();
 
   return (
     <View className="flex-row flex-wrap items-center gap-2">
@@ -41,17 +43,31 @@ export default function NewAppointmentStatus() {
           <View className="flex-row items-center gap-1">
             <Calendar size={12} color="#006A71" />
             <Text className="text-primary">
-            {new Date(slot?.date).toLocaleDateString('es-AR', {
-              day: '2-digit', month: '2-digit', year: 'numeric'
-            })}
-          </Text>
-          <Clock size={12} color="#006A71" />
+              {formatUtcToLocalDateTime(slot?.date + 'T00:00:00', timeZone, {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: undefined,
+                minute: undefined
+              })}
+            </Text>
+            <Clock size={12} color="#006A71" />
             <Text className="text-primary">
-              {slot?.start_time} - {slot?.end_time}
+              {new Date(`2000-01-01T${slot?.start_time}:00Z`).toLocaleTimeString(undefined, {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+                timeZone
+              })} - {new Date(`2000-01-01T${slot?.end_time}:00Z`).toLocaleTimeString(undefined, {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+                timeZone
+              })}
             </Text>
           </View>
         </View>
       )}
     </View>
-  )
+  );
 }

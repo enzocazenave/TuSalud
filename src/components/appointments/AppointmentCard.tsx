@@ -4,6 +4,8 @@ import { User, Calendar, Clock, Trash } from "lucide-react-native";
 import useAppointments from "../../hooks/useAppointments";
 import React from "react";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
+import { formatUtcToLocalDateTime, getUserTimeZone } from "../../utils/date";
+
 interface Props {
   appointment: PatientAppointment;
   hasDeleteButton?: boolean;
@@ -14,19 +16,20 @@ interface Props {
 export default function AppointmentCard({ appointment, hasDeleteButton = false, onDelete, isHistory = false }: Props) {
   const { showConfirmation, Confirmation } = useConfirmationModal()
   const { deleteAppointmentById } = useAppointments()
+  const timeZone = getUserTimeZone();
 
-  const formattedDate = new Date(appointment.date).toLocaleDateString('es-AR', {
+  const formattedDate = formatUtcToLocalDateTime(appointment.date, timeZone, {
     day: '2-digit',
-    month: '2-digit', 
+    month: '2-digit',
     year: 'numeric'
   });
 
-  const formattedStartTime = new Date(appointment.start_time).toLocaleTimeString('es-AR', {
+  const formattedStartTime = formatUtcToLocalDateTime(appointment.start_time, timeZone, {
     hour: '2-digit',
     minute: '2-digit',
-    hour12: false
+    hour12: false,
+    timeZone
   });
-
 
   const handleDeleteAppointment = async () => {
     const confirmed = await showConfirmation({

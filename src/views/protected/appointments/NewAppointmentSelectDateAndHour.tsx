@@ -12,6 +12,7 @@ import { CircleCheck } from "lucide-react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MyAppointmentsStackParamList } from "./MyAppointmentsView";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { formatUtcToLocalDate, formatUtcToLocalDateTime, getUserTimeZone } from "../../../utils/date";
 
 LocaleConfig.locales['es'] = {
   monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -21,14 +22,21 @@ LocaleConfig.locales['es'] = {
 };
 LocaleConfig.defaultLocale = 'es';
 
-const formatDate = (date: Date) => date.toISOString().split("T")[0];
-
 const getMonthStartEnd = (year: number, month: number) => {
-  const start = new Date(year, month, 1);
+  const today = new Date();
+  const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+
+  const start = isCurrentMonth
+    ? today
+    : new Date(year, month, 1);
+
   const end = new Date(year, month + 1, 0);
+
+  const timeZone = getUserTimeZone();
+
   return {
-    startDate: formatDate(start),
-    endDate: formatDate(end),
+    startDate: formatUtcToLocalDate(start, timeZone),
+    endDate: formatUtcToLocalDate(end, timeZone),
   };
 };
 
@@ -37,11 +45,12 @@ export default function NewAppointmentSelectDateAndHour() {
   const { professional, setSlot } = useNewAppointment();
   const [selectedSlot, setSelectedSlot] = useState<any>(null);
   const { navigate } = useNavigation<NativeStackNavigationProp<MyAppointmentsStackParamList>>();
+  const timeZone = getUserTimeZone();
 
   const { getProfessionalAvailability, isLoading, handleLoading } = useProfessionals();
 
   const [availability, setAvailability] = useState<any[]>([]);
-  const [selectedDate, setSelectedDate] = useState(formatDate(new Date()));
+  const [selectedDate, setSelectedDate] = useState(formatUtcToLocalDate(new Date(), timeZone));
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [error, setError] = useState<string | null>(null);
 
@@ -70,22 +79,39 @@ export default function NewAppointmentSelectDateAndHour() {
   }, [fetchAvailability]);
 
   const markedDates = useMemo(() => {
-    const marked: any = {};
+    const marked: Record<string, any> = {};
+    const lastDayOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
+    
+    const availableDatesMap = new Map(
+      availability.map(day => [
+        day.date,
+        {
+          hasSlots: day.slots.length > 0,
+          isSelected: day.date === selectedDate
+        }
+      ])
+    );
 
-    for (const day of availability) {
-      const hasSlots = day.slots.length > 0;
+    for (let d = 1; d <= lastDayOfMonth.getDate(); d++) {
+      const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), d);
+      const dateString = formatUtcToLocalDate(date, timeZone);
+      const dayInfo = availableDatesMap.get(dateString);
 
-      marked[day.date] = {
-        disabled: !hasSlots,
-        disableTouchEvent: !hasSlots,
-        marked: hasSlots,
-        dotColor: hasSlots ? "#2E8B57" : undefined,
-        selected: selectedDate === day.date,
-        selectedColor: selectedDate === day.date ? "#006A71" : undefined,
+      marked[dateString] = dayInfo ? {
+        disabled: !dayInfo.hasSlots,
+        disableTouchEvent: !dayInfo.hasSlots,
+        marked: dayInfo.hasSlots,
+        dotColor: dayInfo.hasSlots ? "#2E8B57" : undefined,
+        selected: dayInfo.isSelected,
+        selectedColor: dayInfo.isSelected ? "#006A71" : undefined
+      } : {
+        disabled: true,
+        disableTouchEvent: true
       };
     }
+
     return marked;
-  }, [availability, selectedDate]);
+  }, [availability, selectedDate, currentMonth]);
 
   const slotsForDate = availability.find(d => d.date === selectedDate)?.slots || [];
 
@@ -126,7 +152,7 @@ export default function NewAppointmentSelectDateAndHour() {
 
         <Calendar
           markedDates={markedDates}
-          current={formatDate(currentMonth)}
+          current={formatUtcToLocalDate(currentMonth, timeZone)}
           onDayPress={handleDayPress}
           onMonthChange={handleMonthChange}
           theme={{
@@ -159,8 +185,13 @@ export default function NewAppointmentSelectDateAndHour() {
         )}
 
         <Text className="text-xl mt-4 text-primary font-semibold">
-          Horarios para {new Date(selectedDate).toLocaleDateString('es-AR', {
-            weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric'
+          Horarios para {formatUtcToLocalDateTime(selectedDate + 'T00:00:00', timeZone, {
+            weekday: 'long',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: undefined,
+            minute: undefined
           })}
         </Text>
 
@@ -181,7 +212,17 @@ export default function NewAppointmentSelectDateAndHour() {
               >
                 { isSlotSelected(item) && <CircleCheck size={15} color="#fff" /> }
                 <Text className="text-white font-semibold">
-                  {item.start_time} - {item.end_time}
+                  {new Date(`2000-01-01T${item.start_time}:00Z`).toLocaleTimeString(undefined, { 
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                    timeZone
+                  })} - {new Date(`2000-01-01T${item.end_time}:00Z`).toLocaleTimeString(undefined, {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                    timeZone
+                  })}
                 </Text>
               </TouchableOpacity>
             )}

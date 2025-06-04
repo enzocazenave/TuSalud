@@ -5,6 +5,7 @@ import useAppointments from '../../hooks/useAppointments';
 import { PatientAppointment } from '../../types/PatientAppointment';
 import SmallAppointmentCard from './SmallAppointmentCard';
 import { useFocusEffect } from '@react-navigation/native';
+import { formatUtcToLocalDate, getMonthNameFromDateString, getUserTimeZone } from '../../utils/date';
 
 interface DayItem {
   date: string;
@@ -12,20 +13,24 @@ interface DayItem {
   short: string;
 }
 
-const getTodayISO = () => new Date().toISOString().split('T')[0];
+const getTodayISO = () => formatUtcToLocalDate(new Date(), getUserTimeZone());
 
 const generateWeek = (referenceDate: Date): DayItem[] => {
   const week = [];
+  const timeZone = getUserTimeZone();
 
   for (let i = 0; i < 7; i++) {
     const date = new Date(referenceDate);
     date.setDate(referenceDate.getDate() + i);
 
+    const localDate = formatUtcToLocalDate(date, timeZone);
+    const dayDate = new Date(localDate + 'T00:00:00');
+
     week.push({
-      date: date.toISOString().split('T')[0],
-      day: date.getDate(),
-      short: date
-        .toLocaleDateString('es-AR', { weekday: 'short' })
+      date: localDate,
+      day: dayDate.getDate(),
+      short: dayDate
+        .toLocaleDateString('es-AR', { weekday: 'short', timeZone })
         .replace('.', '')
         .toUpperCase(),
     });
@@ -49,24 +54,20 @@ export default function WeeklySchedule() {
 
   const days = generateWeek(weekStartDate);
 
-  const monthName = new Date(selectedDate).toLocaleDateString('es-AR', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
-  });
+  const monthName = getMonthNameFromDateString(selectedDate);
 
   const goToPreviousWeek = () => {
     const newDate = new Date(weekStartDate);
     newDate.setDate(newDate.getDate() - 7);
     setWeekStartDate(newDate);
-    setSelectedDate(newDate.toISOString().split('T')[0]);
+    setSelectedDate(formatUtcToLocalDate(newDate));
   };
 
   const goToNextWeek = () => {
     const newDate = new Date(weekStartDate);
     newDate.setDate(newDate.getDate() + 7);
     setWeekStartDate(newDate);
-    setSelectedDate(newDate.toISOString().split('T')[0]);
+    setSelectedDate(formatUtcToLocalDate(newDate));
   };
 
   const handleDayPress = async (date: string) => {
