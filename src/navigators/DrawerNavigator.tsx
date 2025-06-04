@@ -1,5 +1,6 @@
 import { createDrawerNavigator, DrawerContentScrollView } from "@react-navigation/drawer";
-import { Text, TouchableOpacity, View } from "react-native";
+
+import { Text, TouchableOpacity, View, Switch } from "react-native";
 import { BookOpen, Calendar, FileText, Home, LogOut, User, Moon } from "lucide-react-native";
 import { BottomTabNavigator } from "./BottomTabNavigator";
 import DoctorsView from "../views/protected/DoctorsView";
@@ -32,7 +33,7 @@ export const DrawerNavigator = () => {
 
 const CustomDrawerContent = ({ navigation }: { navigation: any }) => {
   const { logout } = useAuth();
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   const handleLogout = async () => {
     await logout();
@@ -92,6 +93,14 @@ const CustomDrawerContent = ({ navigation }: { navigation: any }) => {
           <Moon color={theme === 'dark' ? '#5CC8D7' : '#006A71'} size={25} />
           <Text className="text-[#006A71] dark:text-darkprimary text-lg">Tema</Text>
         </TouchableOpacity>
+
+        <View className="flex-row items-center justify-between px-5 py-4 border-b border-[#006A71] dark:border-darkprimary">
+          <View className="flex-row items-center gap-3">
+            <Moon color={theme === 'dark' ? '#5CC8D7' : '#006A71'} size={25} />
+            <Text className="text-[#006A71] dark:text-darkprimary text-lg">Modo oscuro</Text>
+          </View>
+          <Switch value={theme === 'dark'} onValueChange={toggleTheme} />
+        </View>
       </DrawerContentScrollView>
 
       <View className="p-5">

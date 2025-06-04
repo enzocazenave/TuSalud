@@ -29,9 +29,9 @@ export default function MyNextAppointmentsView() {
   )
 
   return (
-    <View className="pt-9 px-5 gap-4">
+    <View className="pt-9 px-5 gap-4 bg-quaternary dark:bg-darksecondary flex-1">
       <GoBackButton />
-      <Text className="text-4xl text-primary font-bold">Turnos próximos</Text>
+      <Text className="text-4xl text-primary dark:text-darkprimary font-bold">Turnos próximos</Text>
 
       {isLoading.nextAppointments ? (
         <ActivityIndicator size="large" color="#006A71" />
@@ -43,7 +43,7 @@ export default function MyNextAppointmentsView() {
           keyExtractor={item => item.id.toString()}
           contentContainerStyle={{ gap: 16, paddingBottom: bottom + 150 }}
           ListEmptyComponent={() => (
-            <Text className="text-primary text-center">No hay turnos próximos</Text>
+            <Text className="text-primary dark:text-darkprimary text-center">No hay turnos próximos</Text>
           )}
         />
       )}

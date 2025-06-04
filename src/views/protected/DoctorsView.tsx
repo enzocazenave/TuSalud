@@ -14,8 +14,6 @@ export default function DoctorsView() {
   const { bottom } = useSafeAreaInsets();
   const { theme } = useTheme();
 
-  console.log(theme)
-
   const [specialties, setSpecialties] = useState<any[]>([]);
 
   const { isLoading, getSpecialties } = useSpecialites();

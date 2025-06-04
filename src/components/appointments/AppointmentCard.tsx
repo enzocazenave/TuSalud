@@ -45,12 +45,12 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
   }
   
   return (
-    <View className="bg-secondary rounded-[20px] p-5 gap-4 relative">
+    <View className="bg-secondary dark:bg-darktertiary rounded-[20px] p-5 gap-4 relative">
       {isHistory && (
         <>
           {appointment.appointment_state_id === 1 && (
             <View className="justify-start items-start">
-              <Text className="bg-primary w-fit px-2 py-0 rounded-lg text-secondary font-semibold">Reservado</Text>
+              <Text className="bg-primary dark:bg-darkprimary w-fit px-2 py-0 rounded-lg text-secondary font-semibold">Reservado</Text>
             </View>
           )}
           {appointment.appointment_state_id === 2 && (
@@ -68,7 +68,7 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
 
       {hasDeleteButton && appointment.appointment_state_id === 1 && (
         <>
-          <TouchableOpacity onPress={handleDeleteAppointment} className="absolute top-5 right-5 p-3 rounded-full bg-primary/20">
+          <TouchableOpacity onPress={handleDeleteAppointment} className="absolute top-5 right-5 p-3 rounded-full bg-primary/20 dark:bg-darkprimary/20">
             <Trash size={20} color="#006A71" />
           </TouchableOpacity>
 
@@ -77,17 +77,17 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
       )}
 
       <View className="flex-row gap-4 items-center">
-        <View className="bg-[#006A71] rounded-full p-2">
+        <View className="bg-[#006A71] dark:bg-darkprimary rounded-full p-2">
           <User size={30} color="#9ACBD0" />
         </View>
 
         <View>
-          <Text className="text-primary text-lg font-bold">{appointment?.professional?.full_name}</Text>
-          <Text className="text-primary text-[15px]">{appointment?.specialty?.name}</Text>
+          <Text className="text-primary dark:text-darkprimary text-lg font-bold">{appointment?.professional?.full_name}</Text>
+          <Text className="text-primary dark:text-darkprimary text-[15px]">{appointment?.specialty?.name}</Text>
         </View>
       </View>
 
-      <View className="bg-tertiary flex-row items-center rounded-[20px] p-3 justify-between">
+      <View className="bg-tertiary dark:bg-darkprimary flex-row items-center rounded-[20px] p-3 justify-between">
         <View className="flex-row items-center gap-2">
           <Calendar size={20} color="#9ACBD0" />
           <Text className="text-white text-md">{formattedDate}</Text>

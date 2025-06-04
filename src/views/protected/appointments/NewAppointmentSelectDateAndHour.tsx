@@ -136,19 +136,19 @@ export default function NewAppointmentSelectDateAndHour() {
   }, [selectedSlot]);
 
   return (
-    <ScrollView contentContainerClassName="pt-9 px-5 gap-8" contentContainerStyle={{ paddingBottom: bottom + 60 }}>
+    <ScrollView contentContainerClassName="pt-9 px-5 gap-8 bg-quaternary dark:bg-darksecondary" contentContainerStyle={{ paddingBottom: bottom + 60 }}>
       <View className="flex-row items-center justify-between">
         <GoBackButton callback={() => {
           setSelectedSlot(null)
           setSlot(null)
         }} />
-        <Text className="text-primary text-lg">Paso 4 de 5</Text>
+        <Text className="text-primary dark:text-darkprimary text-lg">Paso 4 de 5</Text>
       </View>
 
       <NewAppointmentStatus />
 
       <View className="gap-4">
-        <Text className="text-3xl text-primary font-bold">Seleccionar turno</Text>
+        <Text className="text-3xl text-primary dark:text-darkprimary font-bold">Seleccionar turno</Text>
 
         <Calendar
           markedDates={markedDates}
@@ -184,7 +184,7 @@ export default function NewAppointmentSelectDateAndHour() {
           <Text className="text-red-500 mt-2">{error}</Text>
         )}
 
-        <Text className="text-xl mt-4 text-primary font-semibold">
+        <Text className="text-xl mt-4 text-primary dark:text-darkprimary font-semibold">
           Horarios para {formatUtcToLocalDateTime(selectedDate + 'T00:00:00', timeZone, {
             weekday: 'long',
             day: '2-digit',
@@ -196,7 +196,7 @@ export default function NewAppointmentSelectDateAndHour() {
         </Text>
 
         {slotsForDate.length === 0 ? (
-          <Text className="text-gray-500 mt-2">No hay turnos disponibles.</Text>
+          <Text className="text-gray-500 dark:text-darkprimary mt-2">No hay turnos disponibles.</Text>
         ) : (
           <FlatList
             className="mt-2"
