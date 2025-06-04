@@ -28,23 +28,23 @@ export default function NewAppointmentConfirmView() {
   }
 
   return (
-    <View className="pt-9 px-5 gap-8">
+    <View className="pt-9 px-5 gap-8 bg-quaternary dark:bg-darksecondary flex-1">
       <View className="flex-row items-center justify-between">
         <GoBackButton />
-        <Text className="text-primary text-lg">Paso 4 de 5</Text>
+        <Text className="text-primary dark:text-darkprimary text-lg">Paso 4 de 5</Text>
       </View>
 
-      <Text className="text-3xl text-primary font-bold">Confirmar turno</Text>
+      <Text className="text-3xl text-primary dark:text-darkprimary font-bold">Confirmar turno</Text>
       
       <NewAppointmentStatus />
 
       <TouchableOpacity
         disabled={isLoading.createAppointment}
         onPress={handleConfirmAppointment}
-        className={`bg-secondary flex-row gap-2 items-center justify-center rounded-lg px-6 py-3 border-2 border-primary ${isLoading.createAppointment ? 'opacity-50' : ''}`}
+        className={`bg-secondary dark:bg-darktertiary flex-row gap-2 items-center justify-center rounded-lg px-6 py-3 border-2 border-primary dark:border-darkprimary ${isLoading.createAppointment ? 'opacity-50' : ''}`}
       >
         {isLoading.createAppointment && <ActivityIndicator size="small" color="#006A71" />}
-        <Text className="text-xl text-primary text-center">Confirmar turno</Text>
+        <Text className="text-xl text-primary dark:text-darkprimary text-center">Confirmar turno</Text>
       </TouchableOpacity>
     </View>
   )

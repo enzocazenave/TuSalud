@@ -104,13 +104,13 @@ export default function ProfileView() {
   }
 
   return (
-    <ScrollView contentContainerClassName="pt-9 px-5 gap-4" contentContainerStyle={{ paddingBottom: bottom + 60 }}>
-      <Text className="text-4xl text-primary font-bold">Mi Perfil</Text>
+    <ScrollView className="bg-quaternary dark:bg-darksecondary" contentContainerClassName="pt-9 px-5 gap-4" contentContainerStyle={{ paddingBottom: bottom + 60 }}>
+      <Text className="text-4xl text-primary dark:text-darkprimary font-bold">Mi Perfil</Text>
       <Dropdown label="Datos Personales">
         {isLoading.getUserData ? (
           <ActivityIndicator size="large" color="#006A71" />
         ) : (
-          <View className="px-5 py-4 bg-quaternary gap-3">
+          <View className="px-5 py-4 bg-quaternary dark:bg-darktertiary gap-3">
             <Input label="Nombre Completo" value={personalData.fullName} onChange={handleChangePersonalData} name="fullName" />
             <Input label="DNI" value={personalData.dni} onChange={handleChangePersonalData} name="dni" />
             <Input label="Teléfono" value={personalData.phoneNumber} onChange={handleChangePersonalData} name="phoneNumber" />
@@ -119,7 +119,7 @@ export default function ProfileView() {
       </Dropdown>
 
       <Dropdown label="Obra Social">
-        <View className="px-5 py-4 bg-quaternary gap-3">
+        <View className="px-5 py-4 bg-quaternary dark:bg-darktertiary gap-3">
           <SelectDropdown
             data={prepaids}
             defaultValue={prepaids.find(prepaid => prepaid.id === personalData.prepaidId)}
@@ -131,7 +131,7 @@ export default function ProfileView() {
             }}
             renderButton={(selectedItem, isOpened) => {
               return (
-                <View className="flex-row items-center gap-2 w-full justify-between bg-secondary border border-primary px-4 py-3 rounded-lg">     
+                <View className="flex-row items-center gap-2 w-full justify-between bg-secondary dark:bg-darktertiary border border-primary dark:border-darkprimary px-4 py-3 rounded-lg">
                   <Text>{selectedItem ? selectedItem.name : 'Selecciona una obra social'}</Text>
                   {isOpened
                     ? <ChevronUp size={25} color="#006A71" />
@@ -142,8 +142,8 @@ export default function ProfileView() {
             }}
             renderItem={(selectedItem, _, isSelected) => {
               return (
-                <View className={`px-4 py-3 border-b border-primary flex-row justify-between items-center gap-4 ${isSelected ? 'bg-tertiary' : ''}`}>
-                  <Text className={`text-primary font-semibold ${isSelected ? 'text-white' : ''}`}>{selectedItem.name}</Text>
+                <View className={`px-4 py-3 border-b border-primary dark:border-darkprimary flex-row justify-between items-center gap-4 ${isSelected ? 'bg-tertiary dark:bg-darkprimary' : ''}`}>
+                  <Text className={`text-primary dark:text-darkprimary font-semibold ${isSelected ? 'text-white' : ''}`}>{selectedItem.name}</Text>
                   {isSelected && <View className="p-1 bg-primary rounded-full items-center justify-center"><Check size={10} color="#FFF" /></View>}
                 </View>
               )

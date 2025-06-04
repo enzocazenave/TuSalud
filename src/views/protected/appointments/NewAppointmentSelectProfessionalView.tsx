@@ -34,22 +34,22 @@ export default function NewAppointmentSelectProfessionalView() {
   }
 
   return (
-    <View className="pt-9 px-5 gap-8">
+    <View className="pt-9 px-5 gap-8 bg-quaternary dark:bg-darksecondary flex-1">
       <View className="flex-row items-center justify-between">
         <GoBackButton callback={() => { setProfessional({}); setSelectedProfessional(null) }} />
-        <Text className="text-primary text-lg">Paso 3 de 5</Text>
+        <Text className="text-primary dark:text-darkprimary text-lg">Paso 3 de 5</Text>
       </View>
 
       <NewAppointmentStatus />
 
       <View className="gap-4">
-        <Text className="text-3xl text-primary font-bold">Seleccionar profesional</Text>
+        <Text className="text-3xl text-primary dark:text-darkprimary font-bold">Seleccionar profesional</Text>
         {isLoading.professionalsBySpecialty ? (
           <View className="items-center justify-center py-4">
             <ActivityIndicator size="large" color="#006A71" />
           </View>
         ) : professionals.length === 0 ? (
-          <Text className="text-primary text-lg">No hay profesionales disponibles</Text>
+          <Text className="text-primary dark:text-darkprimary text-lg">No hay profesionales disponibles</Text>
         ) : (
           <FlatList
             contentContainerClassName="gap-4"
@@ -57,13 +57,13 @@ export default function NewAppointmentSelectProfessionalView() {
             renderItem={({ item }: { item: any }) => (
               <TouchableOpacity
                 onPress={() => handleSelectProfessional(item)}
-                className={`flex-row items-center border gap-4 px-4 py-2 ${selectedProfessional?.id === item?.id ? 'bg-secondary/50 border-primary' : 'bg-secondary/30 border-transparent'}`}
+                className={`flex-row items-center border gap-4 px-4 py-2 ${selectedProfessional?.id === item?.id ? 'bg-secondary/50 dark:bg-darktertiary/50 border-primary dark:border-darkprimary' : 'bg-secondary/30 dark:bg-darktertiary/30 border-transparent'}`}
               >
                 {selectedProfessional?.id === item?.id
                   ? <CircleCheck size={20} color="#006A71" />
                   : <Circle size={20} color="#006A71" />
                 }
-                <Text className="text-primary text-lg">{item?.full_name}</Text>
+                <Text className="text-primary dark:text-darkprimary text-lg">{item?.full_name}</Text>
               </TouchableOpacity>
             )}
           />

@@ -37,27 +37,27 @@ export default function NewAppointmentSelectPrepaidView() {
   }
 
   return (
-    <View className="pt-9 px-5 gap-8">
+    <View className="pt-9 px-5 gap-8 bg-quaternary dark:bg-darksecondary flex-1">
       <View className="flex-row items-center justify-between">
         <GoBackButton callback={() => setPrepaidAffiliation({})} />
-        <Text className="text-primary text-lg">Paso 1 de 5</Text>
+        <Text className="text-primary dark:text-darkprimary text-lg">Paso 1 de 5</Text>
       </View>
 
       <View className="gap-4">
-        <Text className="text-3xl text-primary font-bold">Seleccionar cobertura</Text>
+        <Text className="text-3xl text-primary dark:text-darkprimary font-bold">Seleccionar cobertura</Text>
 
         {
           userPrepaidAffiliation?.prepaid?.name && (
             <TouchableOpacity 
               onPress={() => handleSelectPrepaid(userPrepaidAffiliation)} 
-              className={`flex-row items-center border gap-4 px-4 py-2 ${prepaidAffiliation?.prepaid?.name === userPrepaidAffiliation?.prepaid?.name ? 'bg-secondary/50 border-primary' : 'bg-secondary/30 border-transparent'}`}
+              className={`flex-row items-center border gap-4 px-4 py-2 ${prepaidAffiliation?.prepaid?.name === userPrepaidAffiliation?.prepaid?.name ? 'bg-secondary/50 dark:bg-darktertiary/50 border-primary dark:border-darkprimary' : 'bg-secondary/30 dark:bg-darktertiary/30 border-transparent'}`}
             >
               {prepaidAffiliation?.prepaid?.name === userPrepaidAffiliation?.prepaid?.name
                 ? <CircleCheck size={20} color="#006A71" />
                 : <Circle size={20} color="#006A71" />
               }
 
-              <Text className="text-primary text-lg">{userPrepaidAffiliation?.prepaid?.name}</Text>
+              <Text className="text-primary dark:text-darkprimary text-lg">{userPrepaidAffiliation?.prepaid?.name}</Text>
             </TouchableOpacity>
           )
         }
@@ -68,14 +68,14 @@ export default function NewAppointmentSelectPrepaidView() {
               name: "Particular",
             },
           })} 
-          className={`flex-row items-center border gap-4 px-4 py-2 ${prepaidAffiliation?.prepaid?.name === 'Particular' ? 'bg-secondary/50 border-primary' : 'bg-secondary/30 border-transparent'}`}
+          className={`flex-row items-center border gap-4 px-4 py-2 ${prepaidAffiliation?.prepaid?.name === 'Particular' ? 'bg-secondary/50 dark:bg-darktertiary/50 border-primary dark:border-darkprimary' : 'bg-secondary/30 dark:bg-darktertiary/30 border-transparent'}`}
         >
           {prepaidAffiliation?.prepaid?.name === 'Particular'
             ? <CircleCheck size={20} color="#006A71" />
             : <Circle size={20} color="#006A71" />
           }
           
-          <Text className="text-primary text-lg">Particular</Text>
+          <Text className="text-primary dark:text-darkprimary text-lg">Particular</Text>
         </TouchableOpacity>
       </View>
 
