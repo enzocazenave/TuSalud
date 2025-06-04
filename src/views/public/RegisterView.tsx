@@ -1,4 +1,5 @@
 import { Text, View } from "react-native";
+import { useTheme } from "../../context/ThemeContext";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import GoBackButton from "../../components/ui/GoBackButton";
@@ -7,6 +8,7 @@ import { useAuth } from "../../context/AuthContext";
 
 export default function RegisterView() {
   const { register } = useAuth();
+  const { theme } = useTheme();
 
   const [credentials, setCredentials] = useState({
     fullName: '',
@@ -24,11 +26,11 @@ export default function RegisterView() {
   }
   
   return (
-    <View className="flex flex-1 gap-12 items-center justify-center px-12">
+    <View className="flex flex-1 gap-12 items-center justify-center px-12 bg-quaternary dark:bg-darksecondary">
       <GoBackButton absolute />
 
       <View className="flex gap-8 items-center justify-center w-full">
-        <Text className="text-center text-2xl text-primary font-bold">Crear cuenta</Text>
+        <Text className="text-center text-2xl text-primary dark:text-darkprimary font-bold">Crear cuenta</Text>
         
         <Input 
           placeholder="John Doe" 

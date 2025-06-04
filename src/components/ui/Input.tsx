@@ -20,15 +20,15 @@ export default function Input({
 }: Props) {
   return (
     <View className="flex flex-col gap-2 w-full">
-      <Text className="text-xl text-primary">{label}</Text>
+      <Text className="text-xl text-primary dark:text-darkprimary">{label}</Text>
       <TextInput
         placeholder={placeholder}
         onChangeText={(text) => onChange?.(name, text)}
         value={value}
         className={`
-          bg-secondary rounded-lg border border-primary 
+          bg-secondary dark:bg-darktertiary rounded-lg border border-primary dark:border-darkprimary
           shadow-md shadow-black
-          ${Platform.OS === 'ios' ? 'pl-4' : 'pl-3'} 
+          ${Platform.OS === 'ios' ? 'pl-4' : 'pl-3'}
           ${Platform.OS === "ios" ? 'py-3' : ''}
         `}
         secureTextEntry={secureTextEntry}

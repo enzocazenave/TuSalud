@@ -30,19 +30,19 @@ export default function HomeView() {
   }
 
   return (
-    <View className="pt-9 px-5 gap-9">
+    <View className="pt-9 px-5 gap-9 bg-quaternary dark:bg-darksecondary flex-1">
       <View className="gap-4">
         <View className="flex-row justify-between items-center">
-          <Text className="text-4xl text-primary font-bold">Próximo Turno</Text>
+          <Text className="text-4xl text-primary dark:text-darkprimary font-bold">Próximo Turno</Text>
           <TouchableOpacity onPress={() => { navigation.navigate('MyAppointments', { screen: 'NextAppointments' }) }}>
-            <Text className="text-primary">Ver todos</Text>
+            <Text className="text-primary dark:text-darkprimary">Ver todos</Text>
           </TouchableOpacity>
         </View>
         
         {renderRecentAppointmentOrNewAppointment()}
       </View>
       
-      <View className="bg-primary h-[2px] w-full"></View>
+      <View className="bg-primary dark:bg-darkprimary h-[2px] w-full"></View>
 
       <WeeklyCalendarAppointments />
     </View>
@@ -53,8 +53,8 @@ const NewAppointmentCard = () => {
   const { navigate } = useNavigation<NativeStackNavigationProp<BottomTabParamList>>()
 
   return (
-    <TouchableOpacity className="bg-secondary rounded-[20px] items-center justify-center max-h-[140px] h-full" onPress={() => navigate('MyAppointments', { screen: 'NewAppointmentSelectPrepaid' })}>
-      <View className="bg-primary rounded-full">
+    <TouchableOpacity className="bg-secondary dark:bg-darktertiary rounded-[20px] items-center justify-center max-h-[140px] h-full" onPress={() => navigate('MyAppointments', { screen: 'NewAppointmentSelectPrepaid' })}>
+      <View className="bg-primary dark:bg-darkprimary rounded-full">
         <Plus size={60} color="#9ACBD0" />
       </View>
     </TouchableOpacity>
