@@ -34,7 +34,7 @@ export default function HomeView() {
       <View className="gap-4">
         <View className="flex-row justify-between items-center">
           <Text className="text-4xl text-primary font-bold">Próximo Turno</Text>
-          <TouchableOpacity onPress={() => { navigation.navigate('MyAppointments', { screen: 'NextAppointments' }) }}>
+          <TouchableOpacity onPress={() => { navigation.navigate('MyAppointments', { screen: 'NextAppointments', initial: false }) }}>
             <Text className="text-primary">Ver todos</Text>
           </TouchableOpacity>
         </View>
@@ -52,8 +52,18 @@ export default function HomeView() {
 const NewAppointmentCard = () => {
   const { navigate } = useNavigation<NativeStackNavigationProp<BottomTabParamList>>()
 
+  const handlePress = () => {
+    navigate(
+      'MyAppointments', 
+      { 
+        screen: 'NewAppointmentSelectPrepaid', 
+        initial: false
+      }
+    )
+  }
+
   return (
-    <TouchableOpacity className="bg-secondary rounded-[20px] items-center justify-center max-h-[140px] h-full" onPress={() => navigate('MyAppointments', { screen: 'NewAppointmentSelectPrepaid' })}>
+    <TouchableOpacity className="bg-secondary rounded-[20px] items-center justify-center h-[140px]" onPress={handlePress}>
       <View className="bg-primary rounded-full">
         <Plus size={60} color="#9ACBD0" />
       </View>

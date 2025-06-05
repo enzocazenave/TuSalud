@@ -1,9 +1,24 @@
-import { View, TouchableOpacity, Image } from "react-native";
+import { View, TouchableOpacity, Image, Text } from "react-native";
 import { Bell, MenuIcon } from "lucide-react-native";
+import { useEffect, useState } from "react";
+import messaging from '@react-native-firebase/messaging';
 
 export default function Header({ navigation }: { navigation: any }) {
-
+  const [showNotificationBadge, setShowNotificationBadge] = useState(true)
   const isNotificationsRoute = navigation.getState().routes[navigation.getState().index].name !== 'Notifications';
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async () => {
+      setShowNotificationBadge(true)
+    })
+
+    if (isNotificationsRoute) {
+      setShowNotificationBadge(false)
+    }
+
+    return unsubscribe
+  }, [isNotificationsRoute])
+
 
   return (
     <View
@@ -31,6 +46,10 @@ export default function Header({ navigation }: { navigation: any }) {
 
       <TouchableOpacity className={`${isNotificationsRoute ? 'opacity-100' : 'opacity-0'} duration-75`} onPress={() => navigation.navigate('Notifications')}>
         <Bell stroke="#006A71" size={40} />
+        {showNotificationBadge && (
+          <View className="absolute -top-1 right-0 bg-red-500 rounded-full size-3 items-center justify-center">
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   )

@@ -7,10 +7,13 @@ import Header from "../components/layout/Header";
 import { useAuth } from "../context/AuthContext";
 import MedicalRecordView from "../views/protected/MedicalRecordView";
 import NotificationsView from "../views/protected/NotificationsView";
+import { useNotifications } from "../hooks/useNotifications";
 
 const Drawer = createDrawerNavigator();
 
 export const DrawerNavigator = () => {
+  useNotifications()
+  
   return (
     <Drawer.Navigator 
       drawerContent={(props) => <CustomDrawerContent {...props} />}

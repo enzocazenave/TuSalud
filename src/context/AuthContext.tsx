@@ -87,6 +87,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await backend.post("/auth/logout");
       await AsyncStorage.removeItem('accessToken');
       await AsyncStorage.removeItem('patientId');
+      await AsyncStorage.removeItem('lastPushToken');
       setIsAuthenticated(false);
     } catch (error) {
       console.log(error); // TODO: Handle error
