@@ -1,13 +1,22 @@
 import { Calendar, CalendarPlus, History } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { type NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { type MyAppointmentsStackParamList } from "./MyAppointmentsView";
+import { useCallback } from "react";
+import { useNewAppointment } from "../../../context/NewAppointmentContext";
 
 type Navigation = NativeStackNavigationProp<MyAppointmentsStackParamList>
 
 export default function HomeAppointmentsView() {
   const navigation = useNavigation<Navigation>()
+  const { resetNewAppointment } = useNewAppointment()
+
+  useFocusEffect(
+    useCallback(() => {
+      resetNewAppointment()
+    }, [])
+  )
 
   return (
     <View className="pt-9 px-5 gap-4">

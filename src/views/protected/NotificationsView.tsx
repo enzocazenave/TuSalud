@@ -15,12 +15,12 @@ export default function NotificationsView() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Notifications" component={Notifications} />
+      <Stack.Screen name="Notifications" component={NotificationsScreen} />
     </Stack.Navigator>
   )
 }
 
-const Notifications = () => {
+const NotificationsScreen = () => {
   return (
     <View className="pt-9 px-5 gap-4">
       <View className="flex-row items-center justify-between">
