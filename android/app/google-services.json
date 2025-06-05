@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1039265909334",
+    "project_id": "tusalud-6aebf",
+    "storage_bucket": "tusalud-6aebf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039265909334:android:61b271df28e5ce8e1249f7",
+        "android_client_info": {
+          "package_name": "com.tusaludapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwRefS71DZ1qlM6zoLPKRahts_NKZRtNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,9 +17,7 @@ export default function HomeView() {
 
   useFocusEffect(
     useCallback(() => {
-      getMoreRecentAppointment().then(() => {
-        setRecentAppointment(null)
-      })
+      getMoreRecentAppointment().then(setRecentAppointment)
     }, [])
   )
 

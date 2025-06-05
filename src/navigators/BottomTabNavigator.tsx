@@ -8,7 +8,10 @@ import React from 'react';
 
 export type BottomTabParamList = {
   Home: undefined;
-  MyAppointments: { screen: 'NextAppointments' | 'NewAppointmentSelectPrepaid' | 'NewAppointmentSelectSpeciality' | 'NewAppointmentSelectProfessional' | 'NewAppointmentSelectDateAndHour' | 'NewAppointmentConfirm' } | undefined;
+  MyAppointments: { 
+    initial: boolean
+    screen: 'NextAppointments' | 'NewAppointmentSelectPrepaid' | 'NewAppointmentSelectSpeciality' | 'NewAppointmentSelectProfessional' | 'NewAppointmentSelectDateAndHour' | 'NewAppointmentConfirm'
+  } | undefined;
   Profile: undefined;
 }
 
