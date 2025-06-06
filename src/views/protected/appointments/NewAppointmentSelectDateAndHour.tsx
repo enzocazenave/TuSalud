@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { MyAppointmentsStackParamList } from "./MyAppointmentsView";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { formatUtcToLocalDate, formatUtcToLocalDateTime, getUserTimeZone } from "../../../utils/date";
+import { useTheme } from "../../../context/ThemeContext";
 
 LocaleConfig.locales['es'] = {
   monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -46,6 +47,7 @@ export default function NewAppointmentSelectDateAndHour() {
   const [selectedSlot, setSelectedSlot] = useState<any>(null);
   const { navigate } = useNavigation<NativeStackNavigationProp<MyAppointmentsStackParamList>>();
   const timeZone = getUserTimeZone();
+  const { theme } = useTheme();
 
   const { getProfessionalAvailability, isLoading, handleLoading } = useProfessionals();
 
@@ -103,7 +105,7 @@ export default function NewAppointmentSelectDateAndHour() {
         marked: dayInfo.hasSlots,
         dotColor: dayInfo.hasSlots ? "#2E8B57" : undefined,
         selected: dayInfo.isSelected,
-        selectedColor: dayInfo.isSelected ? "#006A71" : undefined
+        selectedColor: dayInfo.isSelected ? (theme === 'dark' ? '#5CC8D7' : '#006A71') : undefined
       } : {
         disabled: true,
         disableTouchEvent: true
@@ -156,10 +158,10 @@ export default function NewAppointmentSelectDateAndHour() {
           onDayPress={handleDayPress}
           onMonthChange={handleMonthChange}
           theme={{
-            selectedDayBackgroundColor: "#006A71",
-            todayTextColor: "#006A71",
-            arrowColor: "#006A71",
-            monthTextColor: "#006A71",
+            selectedDayBackgroundColor: theme === 'dark' ? '#5CC8D7' : '#006A71',
+            todayTextColor: theme === 'dark' ? '#5CC8D7' : '#006A71',
+            arrowColor: theme === 'dark' ? '#5CC8D7' : '#006A71',
+            monthTextColor: theme === 'dark' ? '#5CC8D7' : '#006A71',
             textMonthFontSize: 16,
             textMonthFontWeight: "bold"
           }}
@@ -176,7 +178,7 @@ export default function NewAppointmentSelectDateAndHour() {
             backgroundColor: 'rgba(255,255,255,0.7)', zIndex: 1,
             borderRadius: 10
           }}>
-            <ActivityIndicator size="large" color="#006A71" />
+            <ActivityIndicator size="large" color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
           </View>
         )}
 

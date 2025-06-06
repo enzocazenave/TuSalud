@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
+import { useTheme } from '../../context/ThemeContext';
 import useAppointments from '../../hooks/useAppointments';
 import { PatientAppointment } from '../../types/PatientAppointment';
 import SmallAppointmentCard from './SmallAppointmentCard';
@@ -45,6 +46,7 @@ export default function WeeklySchedule() {
   const [appointments, setAppointments] = useState<PatientAppointment[]>([])
 
   const { getAppointmentsByDate, isLoading } = useAppointments()
+  const { theme } = useTheme();
 
   useFocusEffect(
     useCallback(() => {
@@ -78,7 +80,7 @@ export default function WeeklySchedule() {
     <View className="rounded-xl gap-4">
       <View className="flex-row items-center justify-between">
         <TouchableOpacity onPress={goToPreviousWeek}>
-          <ChevronLeft color="#006A71" size={28} />
+          <ChevronLeft color={theme === 'dark' ? '#5CC8D7' : '#006A71'} size={28} />
         </TouchableOpacity>
 
         <Text className="text-xl font-bold text-primary dark:text-darkprimary">
@@ -86,7 +88,7 @@ export default function WeeklySchedule() {
         </Text>
 
         <TouchableOpacity onPress={goToNextWeek}>
-          <ChevronRight color="#006A71" size={28} />
+          <ChevronRight color={theme === 'dark' ? '#5CC8D7' : '#006A71'} size={28} />
         </TouchableOpacity>
       </View>
 
@@ -136,7 +138,7 @@ export default function WeeklySchedule() {
         ListEmptyComponent={
           isLoading.appointmentsByDate ? (
             <View className="items-center justify-center">
-              <ActivityIndicator size="large" color="#006A71" />
+              <ActivityIndicator size="large" color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
             </View>
           ) : (
             <View className="flex-1 items-center justify-center">

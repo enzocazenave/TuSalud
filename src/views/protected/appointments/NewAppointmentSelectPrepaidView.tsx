@@ -7,11 +7,13 @@ import { useNewAppointment } from "../../../context/NewAppointmentContext";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Circle, CircleCheck } from "lucide-react-native";
 import { MyAppointmentsStackParamList } from "./MyAppointmentsView";
+import { useTheme } from "../../../context/ThemeContext";
 
 export default function NewAppointmentSelectPrepaidView() {
   const { navigate } = useNavigation<NavigationProp<MyAppointmentsStackParamList>>()
   const { getUserPrepaids} = useUser()
   const { setPrepaidAffiliation, prepaidAffiliation } = useNewAppointment()
+  const { theme } = useTheme();
 
   const [userPrepaidAffiliation, setUserPrepaidAffiliation] = useState({
     prepaid: {
@@ -53,8 +55,8 @@ export default function NewAppointmentSelectPrepaidView() {
               className={`flex-row items-center border gap-4 px-4 py-2 ${prepaidAffiliation?.prepaid?.name === userPrepaidAffiliation?.prepaid?.name ? 'bg-secondary/50 dark:bg-darktertiary/50 border-primary dark:border-darkprimary' : 'bg-secondary/30 dark:bg-darktertiary/30 border-transparent'}`}
             >
               {prepaidAffiliation?.prepaid?.name === userPrepaidAffiliation?.prepaid?.name
-                ? <CircleCheck size={20} color="#006A71" />
-                : <Circle size={20} color="#006A71" />
+                ? <CircleCheck size={20} color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
+                : <Circle size={20} color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
               }
 
               <Text className="text-primary dark:text-darkprimary text-lg">{userPrepaidAffiliation?.prepaid?.name}</Text>
@@ -71,8 +73,8 @@ export default function NewAppointmentSelectPrepaidView() {
           className={`flex-row items-center border gap-4 px-4 py-2 ${prepaidAffiliation?.prepaid?.name === 'Particular' ? 'bg-secondary/50 dark:bg-darktertiary/50 border-primary dark:border-darkprimary' : 'bg-secondary/30 dark:bg-darktertiary/30 border-transparent'}`}
         >
           {prepaidAffiliation?.prepaid?.name === 'Particular'
-            ? <CircleCheck size={20} color="#006A71" />
-            : <Circle size={20} color="#006A71" />
+            ? <CircleCheck size={20} color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
+            : <Circle size={20} color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
           }
           
           <Text className="text-primary dark:text-darkprimary text-lg">Particular</Text>

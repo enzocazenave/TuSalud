@@ -12,6 +12,7 @@ import { useNewAppointment } from "../../../context/NewAppointmentContext";
 import Button from "../../../components/ui/Button";
 import useProfessionals from "../../../hooks/useProfessionals";
 import NewAppointmentStatus from "../../../components/appointments/NewAppointmentStatus";
+import { useTheme } from "../../../context/ThemeContext";
 
 export default function NewAppointmentSelectProfessionalView() {
   const { navigate } = useNavigation<NavigationProp<MyAppointmentsStackParamList>>()
@@ -19,6 +20,7 @@ export default function NewAppointmentSelectProfessionalView() {
   const [professionals, setProfessionals] = useState([])
   const { setProfessional, professional, specialty } = useNewAppointment()
   const [selectedProfessional, setSelectedProfessional] = useState<any>(null)
+  const { theme } = useTheme();
 
   useEffect(() => {
     getProfessionalsBySpecialty(specialty?.id).then(setProfessionals)
@@ -46,7 +48,7 @@ export default function NewAppointmentSelectProfessionalView() {
         <Text className="text-3xl text-primary dark:text-darkprimary font-bold">Seleccionar profesional</Text>
         {isLoading.professionalsBySpecialty ? (
           <View className="items-center justify-center py-4">
-            <ActivityIndicator size="large" color="#006A71" />
+            <ActivityIndicator size="large" color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
           </View>
         ) : professionals.length === 0 ? (
           <Text className="text-primary dark:text-darkprimary text-lg">No hay profesionales disponibles</Text>
@@ -60,8 +62,8 @@ export default function NewAppointmentSelectProfessionalView() {
                 className={`flex-row items-center border gap-4 px-4 py-2 ${selectedProfessional?.id === item?.id ? 'bg-secondary/50 dark:bg-darktertiary/50 border-primary dark:border-darkprimary' : 'bg-secondary/30 dark:bg-darktertiary/30 border-transparent'}`}
               >
                 {selectedProfessional?.id === item?.id
-                  ? <CircleCheck size={20} color="#006A71" />
-                  : <Circle size={20} color="#006A71" />
+                  ? <CircleCheck size={20} color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
+                  : <Circle size={20} color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
                 }
                 <Text className="text-primary dark:text-darkprimary text-lg">{item?.full_name}</Text>
               </TouchableOpacity>

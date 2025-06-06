@@ -3,6 +3,7 @@ import { type PatientAppointment } from "../../types/PatientAppointment";
 import { User, Calendar, Clock, Trash } from "lucide-react-native";
 import useAppointments from "../../hooks/useAppointments";
 import React from "react";
+import { useTheme } from "../../context/ThemeContext";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
 import { formatUtcToLocalDateTime, getUserTimeZone } from "../../utils/date";
 
@@ -17,6 +18,7 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
   const { showConfirmation, Confirmation } = useConfirmationModal()
   const { deleteAppointmentById } = useAppointments()
   const timeZone = getUserTimeZone();
+  const { theme } = useTheme();
 
   const formattedDate = formatUtcToLocalDateTime(appointment.date, timeZone, {
     day: '2-digit',
@@ -55,12 +57,12 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
           )}
           {appointment.appointment_state_id === 2 && (
             <View className="justify-start items-start">
-              <Text className="bg-red-500/60 w-fit px-2 py-0 rounded-lg text-black font-semibold">Cancelado</Text>
+              <Text className="bg-red-500/60 w-fit px-2 py-0 rounded-lg text-black dark:text-white font-semibold">Cancelado</Text>
             </View>
           )}
           {appointment.appointment_state_id === 3 && (
             <View className="justify-start items-start">
-              <Text className="bg-green-500/60 w-fit px-2 py-0 rounded-lg text-black font-semibold">Completado</Text>
+              <Text className="bg-green-500/60 w-fit px-2 py-0 rounded-lg text-black dark:text-white font-semibold">Completado</Text>
             </View>
           )}
         </>
@@ -69,7 +71,7 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
       {hasDeleteButton && appointment.appointment_state_id === 1 && (
         <>
           <TouchableOpacity onPress={handleDeleteAppointment} className="absolute top-5 right-5 p-3 rounded-full bg-primary/20 dark:bg-darkprimary/20">
-            <Trash size={20} color="#006A71" />
+            <Trash size={20} color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
           </TouchableOpacity>
 
           <Confirmation />

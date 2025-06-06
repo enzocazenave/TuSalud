@@ -6,11 +6,13 @@ import { PatientAppointment } from "../../../types/PatientAppointment";
 import AppointmentCard from "../../../components/appointments/AppointmentCard";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GoBackButton from "../../../components/ui/GoBackButton";
+import { useTheme } from "../../../context/ThemeContext";
 
 export default function AllAppointmentsView() {
   const { bottom } = useSafeAreaInsets()
   const { getAppointments, isLoading } = useAppointments()
   const [appointments, setAppointments] = useState<PatientAppointment[]>([])
+  const { theme } = useTheme();
 
   useFocusEffect(
     useCallback(() => {
@@ -35,7 +37,7 @@ export default function AllAppointmentsView() {
       <Text className="text-4xl text-primary dark:text-darkprimary font-bold">Historial de turnos</Text>
 
       {isLoading.appointments ? (
-        <ActivityIndicator size="large" color="#006A71" />
+        <ActivityIndicator size="large" color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
       ) : (
         <FlatList
           showsVerticalScrollIndicator={false}

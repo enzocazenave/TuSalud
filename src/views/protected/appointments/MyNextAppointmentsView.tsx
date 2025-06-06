@@ -6,11 +6,13 @@ import { PatientAppointment } from "../../../types/PatientAppointment";
 import AppointmentCard from "../../../components/appointments/AppointmentCard";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GoBackButton from "../../../components/ui/GoBackButton";
+import { useTheme } from "../../../context/ThemeContext";
 
 export default function MyNextAppointmentsView() {
   const { bottom } = useSafeAreaInsets()
   const { getNextAppointments, isLoading } = useAppointments()
   const [nextAppointments, setNextAppointments] = useState<PatientAppointment[]>([])
+  const { theme } = useTheme();
 
   useFocusEffect(
     useCallback(() => {
@@ -34,7 +36,7 @@ export default function MyNextAppointmentsView() {
       <Text className="text-4xl text-primary dark:text-darkprimary font-bold">Turnos próximos</Text>
 
       {isLoading.nextAppointments ? (
-        <ActivityIndicator size="large" color="#006A71" />
+        <ActivityIndicator size="large" color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
       ) : (
         <FlatList
           showsVerticalScrollIndicator={false}
