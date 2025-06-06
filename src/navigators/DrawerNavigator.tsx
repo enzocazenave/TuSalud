@@ -7,6 +7,7 @@ import Header from "../components/layout/Header";
 import { useAuth } from "../context/AuthContext";
 import MedicalRecordView from "../views/protected/MedicalRecordView";
 import NotificationsView from "../views/protected/NotificationsView";
+import ThemeSettingsView from "../views/protected/ThemeSettingsView";
 import { useTheme } from "../context/ThemeContext";
 
 const Drawer = createDrawerNavigator();
@@ -23,6 +24,7 @@ export const DrawerNavigator = () => {
       <Drawer.Screen name="Doctors" component={DoctorsView} />
       <Drawer.Screen name="MedicalRecord" component={MedicalRecordView} />
       <Drawer.Screen name="Notifications" component={NotificationsView} />
+      <Drawer.Screen name="ThemeSettings" component={ThemeSettingsView} options={{ title: 'Tema' }} />
     </Drawer.Navigator>
   );
 };
