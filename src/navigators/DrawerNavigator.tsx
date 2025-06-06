@@ -23,6 +23,7 @@ export const DrawerNavigator = () => {
       <Drawer.Screen name="Doctors" component={DoctorsView} />
       <Drawer.Screen name="MedicalRecord" component={MedicalRecordView} />
       <Drawer.Screen name="Notifications" component={NotificationsView} />
+      <Drawer.Screen name="ThemeSettings" component={ThemeSettingsView} options={{ title: 'Tema' }} />
     </Drawer.Navigator>
   );
 };

@@ -134,7 +134,9 @@ export default function ProfileView() {
             renderButton={(selectedItem, isOpened) => {
               return (
                 <View className="flex-row items-center gap-2 w-full justify-between bg-secondary dark:bg-darktertiary border border-primary dark:border-darkprimary px-4 py-3 rounded-lg">
+
                   <Text className="text-primary dark:text-darkprimary">{selectedItem ? selectedItem.name : 'Selecciona una obra social'}</Text>
+
                   {isOpened
                     ? <ChevronUp size={25} color="#006A71" />
                     : <ChevronDown size={25} color="#006A71" />

@@ -12,9 +12,11 @@ module.exports = {
         quaternary: '#E7EFF2',
         quinary: '#006A71',
         darkprimary: '#5CC8D7',
+
         darksecondary: '#24292E',
         darktertiary: '#1F2937',
         darkquaternary: '#24292E',
+
         darkquinary: '#5CC8D7',
       },
     },

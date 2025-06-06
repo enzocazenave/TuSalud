@@ -47,7 +47,7 @@ export default function DoctorsView() {
 }
 
 const SpecialtyItem = ({ item }: { item: any }) => {
-
+  const { theme } = useTheme();
   const { isLoading, getProfessionalsBySpecialty } = useProfessionals();
   const [professionals, setProfessionals] = useState<any[]>([]);
 
@@ -75,6 +75,7 @@ const SpecialtyItem = ({ item }: { item: any }) => {
 }
 
 const ProfessionalItem = ({ item }: { item: any }) => {
+  const { theme } = useTheme();
   const { isLoading, getProfessionalSchedules } = useProfessionals();
   const [schedules, setSchedules] = useState<any[]>([]);
 
