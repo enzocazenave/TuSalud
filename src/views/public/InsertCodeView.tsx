@@ -35,24 +35,23 @@ export default function RecoverPasswordView() {
       </View>
 
       <View className="flex gap-5 justify-center items-center w-full flex-col">
-        <View> 
+        <View>
           <Text className="text-2xl text-[#006A71] font-medium">Recuperar contraseña</Text>
-          <Text className="text-[#447f81]">Por favor ingrese su correo electrónico para cambiar su contraseña.</Text>
+          <Text className="text-[#447f81]">Por favor ingrese el código de verificación que le hemos enviado a su correo electrónico.</Text>
         </View>
       </View>
 
-      <CodeInput 
+      <CodeInput
         cellsQtty={6}
         fillingCallback={fillingCallback}
       />
 
-    <Button
-      text="Enviar código"
-      onPress={handleVerifyCode}
-      className={`max-w-96 ${code.length !== 6 ? 'opacity-60' : ''}`}
-      disabled={code.length !== 6}
-    />
-
+      <Button
+        text="Verificar código"
+        onPress={handleVerifyCode}
+        className={`max-w-96 ${code.length !== 6 ? 'opacity-60' : ''}`}
+        disabled={code.length !== 6}
+      />
     </View>
   )
 }
