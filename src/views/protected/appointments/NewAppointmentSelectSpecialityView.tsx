@@ -11,6 +11,7 @@ import { Circle } from "lucide-react-native";
 import { useNewAppointment } from "../../../context/NewAppointmentContext";
 import Button from "../../../components/ui/Button";
 import NewAppointmentStatus from "../../../components/appointments/NewAppointmentStatus";
+import { useTheme } from "../../../context/ThemeContext";
 
 export default function NewAppointmentSelectSpecialityView() {
   const { navigate } = useNavigation<NavigationProp<MyAppointmentsStackParamList>>()
@@ -18,6 +19,7 @@ export default function NewAppointmentSelectSpecialityView() {
   const [specialties, setSpecialties] = useState([])
   const { setSpecialty } = useNewAppointment()
   const [selectedSpecialty, setSelectedSpecialty] = useState<any>(null)
+  const { theme } = useTheme();
   
 
   useEffect(() => {
@@ -34,20 +36,20 @@ export default function NewAppointmentSelectSpecialityView() {
   }
 
   return (
-    <View className="pt-9 px-5 gap-8">
+    <View className="pt-9 px-5 gap-8 bg-quaternary dark:bg-darksecondary flex-1">
       <View className="flex-row items-center justify-between">
         <GoBackButton callback={() => { setSpecialty({}); setSelectedSpecialty(null) }} />
-        <Text className="text-primary text-lg">Paso 2 de 5</Text>
+        <Text className="text-primary dark:text-darkprimary text-lg">Paso 2 de 5</Text>
       </View>
 
       <NewAppointmentStatus />
 
       <View className="gap-4">
-        <Text className="text-3xl text-primary font-bold">Seleccionar especialidad</Text>
+        <Text className="text-3xl text-primary dark:text-darkprimary font-bold">Seleccionar especialidad</Text>
 
         {isLoading.specialties ? (
           <View className="items-center justify-center py-4">
-            <ActivityIndicator size="large" color="#006A71" />
+            <ActivityIndicator size="large" color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
           </View>
         ) : (
           <FlatList
@@ -56,13 +58,13 @@ export default function NewAppointmentSelectSpecialityView() {
             renderItem={({ item }: { item: any }) => (
               <TouchableOpacity
                 onPress={() => handleSelectSpecialty(item)}
-                className={`flex-row items-center border gap-4 px-4 py-2 ${selectedSpecialty?.id === item?.id ? 'bg-secondary/50 border-primary' : 'bg-secondary/30 border-transparent'}`}
+                className={`flex-row items-center border gap-4 px-4 py-2 ${selectedSpecialty?.id === item?.id ? 'bg-secondary/50 dark:bg-darktertiary/50 border-primary dark:border-darkprimary' : 'bg-secondary/30 dark:bg-darktertiary/30 border-transparent'}`}
               >
                 {selectedSpecialty?.id === item?.id
-                  ? <CircleCheck size={20} color="#006A71" />
-                  : <Circle size={20} color="#006A71" />
+                  ? <CircleCheck size={20} color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
+                  : <Circle size={20} color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
                 }
-                <Text className="text-primary text-lg">{item?.name}</Text>
+                <Text className="text-primary dark:text-darkprimary text-lg">{item?.name}</Text>
               </TouchableOpacity>
             )}
           />

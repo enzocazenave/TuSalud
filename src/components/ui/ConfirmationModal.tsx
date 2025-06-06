@@ -32,16 +32,16 @@ export default function ConfirmationModal({
         onPress={onCancel}
       >
         <Pressable
-          className="bg-white w-[85%] rounded-2xl p-6 shadow-lg relative items-center"
+          className="bg-white dark:bg-darktertiary w-[85%] rounded-2xl p-6 shadow-lg relative items-center"
           onPress={(e) => e.stopPropagation()}
         >
           <TouchableOpacity onPress={onCancel} className="absolute top-4 left-4 p-2 w-12 h-12 flex justify-center items-center rounded-full bg-primary">
             <ChevronLeft size={30} color="#9ACBD0" />
           </TouchableOpacity>
 
-          <Text className="text-xl font-bold text-primary mt-2">{title}</Text>
+          <Text className="text-xl font-bold text-primary dark:text-darkprimary mt-2">{title}</Text>
 
-          <Text className="text-center mt-4 text-base text-black/70">{message}</Text>
+          <Text className="text-center mt-4 text-base text-black/70 dark:text-darkprimary">{message}</Text>
 
           <TouchableOpacity
             onPress={onConfirm}

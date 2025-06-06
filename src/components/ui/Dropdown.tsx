@@ -10,9 +10,9 @@ export default function Dropdown({ label, children }: { label: string, children:
   }
 
   return (
-    <View className="border border-t-0 border-primary">
-      <TouchableOpacity onPress={toggleDropdown} className="flex-row items-center justify-between bg-tertiary/30 border-t border-primary px-5 py-3">
-        <Text className="text-primary font-bold text-2xl">{label}</Text>
+    <View className="border border-t-0 border-primary dark:border-darkprimary">
+      <TouchableOpacity onPress={toggleDropdown} className="flex-row items-center justify-between bg-tertiary/30 dark:bg-darktertiary/30 border-t border-primary dark:border-darkprimary px-5 py-3">
+        <Text className="text-primary dark:text-darkprimary font-bold text-2xl">{label}</Text>
         {isOpen
           ? <ChevronUpIcon size={30} color="#48A6A7" />
           : <ChevronDownIcon size={30} color="#48A6A7" />

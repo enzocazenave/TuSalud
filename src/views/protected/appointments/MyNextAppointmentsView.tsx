@@ -6,11 +6,13 @@ import { PatientAppointment } from "../../../types/PatientAppointment";
 import AppointmentCard from "../../../components/appointments/AppointmentCard";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GoBackButton from "../../../components/ui/GoBackButton";
+import { useTheme } from "../../../context/ThemeContext";
 
 export default function MyNextAppointmentsView() {
   const { bottom } = useSafeAreaInsets()
   const { getNextAppointments, isLoading } = useAppointments()
   const [nextAppointments, setNextAppointments] = useState<PatientAppointment[]>([])
+  const { theme } = useTheme();
 
   useFocusEffect(
     useCallback(() => {
@@ -29,12 +31,12 @@ export default function MyNextAppointmentsView() {
   )
 
   return (
-    <View className="pt-9 px-5 gap-4">
+    <View className="pt-9 px-5 gap-4 bg-quaternary dark:bg-darksecondary flex-1">
       <GoBackButton />
-      <Text className="text-4xl text-primary font-bold">Turnos próximos</Text>
+      <Text className="text-4xl text-primary dark:text-darkprimary font-bold">Turnos próximos</Text>
 
       {isLoading.nextAppointments ? (
-        <ActivityIndicator size="large" color="#006A71" />
+        <ActivityIndicator size="large" color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
       ) : (
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -43,7 +45,7 @@ export default function MyNextAppointmentsView() {
           keyExtractor={item => item.id.toString()}
           contentContainerStyle={{ gap: 16, paddingBottom: bottom + 150 }}
           ListEmptyComponent={() => (
-            <Text className="text-primary text-center">No hay turnos próximos</Text>
+            <Text className="text-primary dark:text-darkprimary text-center">No hay turnos próximos</Text>
           )}
         />
       )}

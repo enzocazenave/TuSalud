@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { MyAppointmentsStackParamList } from "./MyAppointmentsView";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { formatUtcToLocalDate, formatUtcToLocalDateTime, getUserTimeZone } from "../../../utils/date";
+import { useTheme } from "../../../context/ThemeContext";
 
 LocaleConfig.locales['es'] = {
   monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -46,6 +47,7 @@ export default function NewAppointmentSelectDateAndHour() {
   const [selectedSlot, setSelectedSlot] = useState<any>(null);
   const { navigate } = useNavigation<NativeStackNavigationProp<MyAppointmentsStackParamList>>();
   const timeZone = getUserTimeZone();
+  const { theme } = useTheme();
 
   const { getProfessionalAvailability, isLoading, handleLoading } = useProfessionals();
 
@@ -103,7 +105,7 @@ export default function NewAppointmentSelectDateAndHour() {
         marked: dayInfo.hasSlots,
         dotColor: dayInfo.hasSlots ? "#2E8B57" : undefined,
         selected: dayInfo.isSelected,
-        selectedColor: dayInfo.isSelected ? "#006A71" : undefined
+        selectedColor: dayInfo.isSelected ? (theme === 'dark' ? '#5CC8D7' : '#006A71') : undefined
       } : {
         disabled: true,
         disableTouchEvent: true
@@ -136,19 +138,19 @@ export default function NewAppointmentSelectDateAndHour() {
   }, [selectedSlot]);
 
   return (
-    <ScrollView contentContainerClassName="pt-9 px-5 gap-8" contentContainerStyle={{ paddingBottom: bottom + 60 }}>
+    <ScrollView contentContainerClassName="pt-9 px-5 gap-8 bg-quaternary dark:bg-darksecondary" contentContainerStyle={{ paddingBottom: bottom + 60 }}>
       <View className="flex-row items-center justify-between">
         <GoBackButton callback={() => {
           setSelectedSlot(null)
           setSlot(null)
         }} />
-        <Text className="text-primary text-lg">Paso 4 de 5</Text>
+        <Text className="text-primary dark:text-darkprimary text-lg">Paso 4 de 5</Text>
       </View>
 
       <NewAppointmentStatus />
 
       <View className="gap-4">
-        <Text className="text-3xl text-primary font-bold">Seleccionar turno</Text>
+        <Text className="text-3xl text-primary dark:text-darkprimary font-bold">Seleccionar turno</Text>
 
         <Calendar
           markedDates={markedDates}
@@ -156,10 +158,10 @@ export default function NewAppointmentSelectDateAndHour() {
           onDayPress={handleDayPress}
           onMonthChange={handleMonthChange}
           theme={{
-            selectedDayBackgroundColor: "#006A71",
-            todayTextColor: "#006A71",
-            arrowColor: "#006A71",
-            monthTextColor: "#006A71",
+            selectedDayBackgroundColor: theme === 'dark' ? '#5CC8D7' : '#006A71',
+            todayTextColor: theme === 'dark' ? '#5CC8D7' : '#006A71',
+            arrowColor: theme === 'dark' ? '#5CC8D7' : '#006A71',
+            monthTextColor: theme === 'dark' ? '#5CC8D7' : '#006A71',
             textMonthFontSize: 16,
             textMonthFontWeight: "bold"
           }}
@@ -176,7 +178,7 @@ export default function NewAppointmentSelectDateAndHour() {
             backgroundColor: 'rgba(255,255,255,0.7)', zIndex: 1,
             borderRadius: 10
           }}>
-            <ActivityIndicator size="large" color="#006A71" />
+            <ActivityIndicator size="large" color={theme === 'dark' ? '#5CC8D7' : '#006A71'} />
           </View>
         )}
 
@@ -184,7 +186,7 @@ export default function NewAppointmentSelectDateAndHour() {
           <Text className="text-red-500 mt-2">{error}</Text>
         )}
 
-        <Text className="text-xl mt-4 text-primary font-semibold">
+        <Text className="text-xl mt-4 text-primary dark:text-darkprimary font-semibold">
           Horarios para {formatUtcToLocalDateTime(selectedDate + 'T00:00:00', timeZone, {
             weekday: 'long',
             day: '2-digit',
@@ -196,7 +198,7 @@ export default function NewAppointmentSelectDateAndHour() {
         </Text>
 
         {slotsForDate.length === 0 ? (
-          <Text className="text-gray-500 mt-2">No hay turnos disponibles.</Text>
+          <Text className="text-gray-500 dark:text-darkprimary mt-2">No hay turnos disponibles.</Text>
         ) : (
           <FlatList
             className="mt-2"
