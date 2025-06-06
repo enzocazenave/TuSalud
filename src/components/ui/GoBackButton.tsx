@@ -23,8 +23,8 @@ export default function GoBackButton({ absolute, callback }: Props) {
 
   return (
     <View className={`${absolute ? 'absolute left-0 top-8 ps-12' : ''}`}>
-      <TouchableOpacity 
-        className="p-2 bg-primary w-12 h-12 flex justify-center items-center rounded-full" 
+      <TouchableOpacity
+        className="p-2 bg-primary dark:bg-darkprimary w-12 h-12 flex justify-center items-center rounded-full"
         onPress={handleGoBack}
       >
         <ChevronLeft size={30} color="#9ACBD0" />

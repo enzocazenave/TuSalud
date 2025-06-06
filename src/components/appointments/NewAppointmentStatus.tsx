@@ -10,39 +10,39 @@ export default function NewAppointmentStatus() {
   return (
     <View className="flex-row flex-wrap items-center gap-2">
       {prepaidAffiliation?.prepaid?.name && (
-        <View className="bg-secondary/30 rounded-lg p-2 flex-row items-center gap-2">
+        <View className="bg-secondary/30 dark:bg-darktertiary/30 rounded-lg p-2 flex-row items-center gap-2">
           <Check size={20} color="#006A71" />
-          <Text className="text-primary">
+          <Text className="text-primary dark:text-darkprimary">
             1. {prepaidAffiliation?.prepaid?.name}
           </Text>
         </View>
       )}
 
       {specialty?.name && (
-        <View className="bg-secondary/30 rounded-lg p-2 flex-row items-center gap-2">
+        <View className="bg-secondary/30 dark:bg-darktertiary/30 rounded-lg p-2 flex-row items-center gap-2">
           <Check size={20} color="#006A71" />
-          <Text className="text-primary">
+          <Text className="text-primary dark:text-darkprimary">
             2. {specialty?.name}
           </Text>
         </View>
       )}
 
       {professional?.full_name && (
-        <View className="bg-secondary/30 rounded-lg p-2 flex-row items-center gap-2">
+        <View className="bg-secondary/30 dark:bg-darktertiary/30 rounded-lg p-2 flex-row items-center gap-2">
           <Check size={20} color="#006A71" />
-          <Text className="text-primary">
+          <Text className="text-primary dark:text-darkprimary">
             3. {professional?.full_name}
           </Text>
         </View>
       )}
 
       {slot?.start_time && (
-        <View className="bg-secondary/30 rounded-lg p-2 flex-row items-center gap-2">
+        <View className="bg-secondary/30 dark:bg-darktertiary/30 rounded-lg p-2 flex-row items-center gap-2">
           <Check size={20} color="#006A71" />
-          <Text className="text-primary">4.</Text>
+          <Text className="text-primary dark:text-darkprimary">4.</Text>
           <View className="flex-row items-center gap-1">
             <Calendar size={12} color="#006A71" />
-            <Text className="text-primary">
+            <Text className="text-primary dark:text-darkprimary">
               {formatUtcToLocalDateTime(slot?.date + 'T00:00:00', timeZone, {
                 day: '2-digit',
                 month: '2-digit',
@@ -52,7 +52,7 @@ export default function NewAppointmentStatus() {
               })}
             </Text>
             <Clock size={12} color="#006A71" />
-            <Text className="text-primary">
+            <Text className="text-primary dark:text-darkprimary">
               {new Date(`2000-01-01T${slot?.start_time}:00Z`).toLocaleTimeString(undefined, {
                 hour: '2-digit',
                 minute: '2-digit',

@@ -22,10 +22,10 @@ export default function NotificationsView() {
 
 const Notifications = () => {
   return (
-    <View className="pt-9 px-5 gap-4">
+    <View className="pt-9 px-5 gap-4 bg-quaternary dark:bg-darksecondary flex-1">
       <View className="flex-row items-center justify-between">
         <GoBackButton />
-        <Text className="text-4xl text-primary font-bold">Notificaciones</Text>
+        <Text className="text-4xl text-primary dark:text-darkprimary font-bold">Notificaciones</Text>
       </View>
     </View>
   )
