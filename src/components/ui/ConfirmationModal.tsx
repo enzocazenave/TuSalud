@@ -41,13 +41,15 @@ export default function ConfirmationModal({
 
           <Text className="text-xl font-bold text-primary mt-2">{title}</Text>
 
-          <Text className="text-center mt-4 text-base text-black/70">{message}</Text>
+          <Text className="text-center mt-4 text-xl text-black font-medium mb-4">{message}</Text>
 
           <TouchableOpacity
             onPress={onConfirm}
-            className="bg-primary mt-6 px-6 py-3 rounded-xl shadow-md"
+            className="bg-red-600 px-8 py-3 rounded-xl shadow-md"
           >
-            <Text className="text-white font-bold text-base">{confirmText}</Text>
+            <Text className="text-white font-semibold text-base">
+              {confirmText}
+            </Text>
           </TouchableOpacity>
         </Pressable>
       </Pressable>
