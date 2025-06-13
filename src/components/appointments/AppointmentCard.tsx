@@ -90,13 +90,13 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
       <View className="bg-tertiary flex-row items-center rounded-[20px] p-3 justify-between">
         <View className="flex-row items-center gap-2">
           <Calendar size={20} color="#9ACBD0" />
-          <Text className="text-white text-md">{formattedDate}</Text>
+          <Text className="text-white text-xl font-semibold">{formattedDate}</Text>
         </View>
-        
+
         <View className="flex-row items-center gap-2">
           <Clock size={20} color="#9ACBD0" />
-          <Text className="text-white text-md">{formattedStartTime}</Text>
-        </View>
+          <Text className="text-white text-xl font-semibold">{formattedStartTime}</Text>
+        </View> 
       </View>
     </View>
   )
