@@ -199,34 +199,35 @@ export default function NewAppointmentSelectDateAndHour() {
           <Text className="text-gray-500 mt-2">No hay turnos disponibles.</Text>
         ) : (
           <FlatList
+            key={'2col'} 
             className="mt-2"
             data={slotsForDate}
+            numColumns={2}
+            columnWrapperStyle={{ gap: 12, marginBottom: 12 }}
             keyExtractor={(item, index) => `${item.start_time}-${index}`}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            initialNumToRender={5}
             renderItem={({ item }) => (
-              <TouchableOpacity
-                className={`px-4 py-2 rounded-lg mr-2 flex-row items-center gap-2 border-[2px] ${isSlotSelected(item) ? 'border-tertiary bg-primary' : 'bg-primary border-transparent'}`}
-                onPress={() => setSelectedSlot({ date: selectedDate, ...item })}
-              >
-                { isSlotSelected(item) && <CircleCheck size={15} color="#fff" /> }
-                <Text className="text-white font-semibold">
-                  {new Date(`2000-01-01T${item.start_time}:00Z`).toLocaleTimeString(undefined, { 
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false,
-                    timeZone
-                  })} - {new Date(`2000-01-01T${item.end_time}:00Z`).toLocaleTimeString(undefined, {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false,
-                    timeZone
-                  })}
-                </Text>
-              </TouchableOpacity>
-            )}
-          />
+            <TouchableOpacity
+              className={`flex-1 px-4 py-3 rounded-lg items-center border-[2px] ${isSlotSelected(item) ? 'border-tertiary bg-primary' : 'bg-primary border-transparent'}`}
+              onPress={() => setSelectedSlot({ date: selectedDate, ...item })}
+            >
+            { isSlotSelected(item) && <CircleCheck size={15} color="#fff" />}
+            <Text className="text-white font-semibold text-sm text-center">
+              {new Date(`2000-01-01T${item.start_time}:00Z`).toLocaleTimeString(undefined, { 
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+                timeZone
+              })} - {new Date(`2000-01-01T${item.end_time}:00Z`).toLocaleTimeString(undefined, {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+                timeZone
+              })}
+            </Text>
+          </TouchableOpacity>
+  )}
+/>
+
         )}
       </View>
 
