@@ -82,8 +82,8 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
         </View>
 
         <View>
-          <Text className="text-primary text-lg font-bold">{appointment?.professional?.full_name}</Text>
-          <Text className="text-primary text-[15px]">{appointment?.specialty?.name}</Text>
+          <Text className="text-primary text-xl font-bold">{appointment?.professional?.full_name}</Text>
+          <Text className="text-primary text-xl">{appointment?.specialty?.name}</Text>
         </View>
       </View>
 
