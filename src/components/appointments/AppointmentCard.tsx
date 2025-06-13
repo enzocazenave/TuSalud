@@ -75,6 +75,11 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
           <Confirmation />
         </>
       )}
+      {appointment.appointment_state_id === 2 && (
+        <View className="absolute top-5 right-5 bg-red-500/20 rounded-full w-10 h-10 items-center justify-center">
+          <Text className="text-red-600 font-bold text-2xl">×</Text>
+        </View>
+)}
 
       <View className="flex-row gap-4 items-center">
         <View className="bg-[#006A71] rounded-full p-2">
