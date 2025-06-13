@@ -22,7 +22,7 @@ export default function SmallAppointmentCard({ appointment }: Props) {
 
       <View className="flex-row bg-tertiary rounded-[20px] p-2 items-center gap-2">
         <Clock size={20} color="#9ACBD0" />
-        <Text className="text-white text-[15px]">{formattedStartTime}</Text>
+        <Text className="text-white text-2xl font-bold">{formattedStartTime}</Text>
       </View>
     </View>
   )
