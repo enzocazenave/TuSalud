@@ -81,7 +81,7 @@ export default function NewAppointmentSelectDateAndHour() {
   const markedDates = useMemo(() => {
     const marked: Record<string, any> = {};
     const lastDayOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0);
-    
+
     const availableDatesMap = new Map(
       availability.map(day => [
         day.date,
@@ -136,7 +136,8 @@ export default function NewAppointmentSelectDateAndHour() {
   }, [selectedSlot]);
 
   return (
-    <ScrollView contentContainerClassName="pt-9 px-5 gap-8" contentContainerStyle={{ paddingBottom: bottom + 60 }}>
+    <ScrollView 
+      contentContainerClassName="pt-9 px-5 gap-8" contentContainerStyle={{ paddingBottom: bottom + 60 }}>
       <View className="flex-row items-center justify-between">
         <GoBackButton callback={() => {
           setSelectedSlot(null)
@@ -202,30 +203,40 @@ export default function NewAppointmentSelectDateAndHour() {
             className="mt-2"
             data={slotsForDate}
             keyExtractor={(item, index) => `${item.start_time}-${index}`}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            initialNumToRender={5}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                className={`px-4 py-2 rounded-lg mr-2 flex-row items-center gap-2 border-[2px] ${isSlotSelected(item) ? 'border-tertiary bg-primary' : 'bg-primary border-transparent'}`}
-                onPress={() => setSelectedSlot({ date: selectedDate, ...item })}
-              >
-                { isSlotSelected(item) && <CircleCheck size={15} color="#fff" /> }
-                <Text className="text-white font-semibold">
-                  {new Date(`2000-01-01T${item.start_time}:00Z`).toLocaleTimeString(undefined, { 
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false,
-                    timeZone
-                  })} - {new Date(`2000-01-01T${item.end_time}:00Z`).toLocaleTimeString(undefined, {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false,
-                    timeZone
-                  })}
-                </Text>
-              </TouchableOpacity>
-            )}
+            columnWrapperStyle={{ flex: 1, gap: 12, padding: 5 }}
+            scrollEnabled={false}
+            numColumns={2}
+            renderItem={({ item }) => {
+              const isItemSelected = isSlotSelected(item)
+
+              return (
+                <TouchableOpacity
+                  style={{ flex: 1 }}
+                  className={`px-4 py-2 rounded-lg flex-row items-center gap-2 border-[2px justify-center ${isSlotSelected(item)
+                    ? 'border-2 border-primary bg-secondary text-primary'
+                    : 'bg-primary/80 border-2 border-primary/80'
+                    }`}
+                  onPress={() => setSelectedSlot({ date: selectedDate, ...item })}
+                >
+                  {isItemSelected && (
+                    <CircleCheck 
+                      size={15}
+                      strokeWidth={3}
+                      color="#006A71"
+                    />
+                  )}
+
+                  <Text className={`font-bold text-lg ${isItemSelected ? 'text-primary' : 'text-white'}`}>
+                    {new Date(`2000-01-01T${item.start_time}:00Z`).toLocaleTimeString(undefined, {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: false,
+                      timeZone
+                    })}
+                  </Text>
+                </TouchableOpacity>
+              )
+            }}
           />
         )}
       </View>

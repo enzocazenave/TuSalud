@@ -50,17 +50,17 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
         <>
           {appointment.appointment_state_id === 1 && (
             <View className="justify-start items-start">
-              <Text className="bg-primary w-fit px-2 py-0 rounded-lg text-secondary font-semibold">Reservado</Text>
+              <Text className="bg-primary w-fit px-3 py-1 rounded-lg text-secondary font-semibold text-lg">Reservado</Text>
             </View>
           )}
           {appointment.appointment_state_id === 2 && (
             <View className="justify-start items-start">
-              <Text className="bg-red-500/60 w-fit px-2 py-0 rounded-lg text-black font-semibold">Cancelado</Text>
+              <Text className="bg-red-500/60 w-fit px-3 py-1 rounded-lg text-black font-semibold text-lg">Cancelado</Text>
             </View>
           )}
           {appointment.appointment_state_id === 3 && (
             <View className="justify-start items-start">
-              <Text className="bg-green-500/60 w-fit px-2 py-0 rounded-lg text-black font-semibold">Completado</Text>
+              <Text className="bg-green-500/60 w-fit px-3 py-1 rounded-lg text-black font-semibold text-lg">Completado</Text>
             </View>
           )}
         </>
@@ -68,8 +68,8 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
 
       {hasDeleteButton && appointment.appointment_state_id === 1 && (
         <>
-          <TouchableOpacity onPress={handleDeleteAppointment} className="absolute top-5 right-5 p-3 rounded-full bg-primary/20">
-            <Trash size={20} color="#006A71" />
+          <TouchableOpacity onPress={handleDeleteAppointment} className="absolute top-5 right-5 p-3 rounded-full bg-red-500">
+            <Trash size={20} color="#fff" />
           </TouchableOpacity>
 
           <Confirmation />
