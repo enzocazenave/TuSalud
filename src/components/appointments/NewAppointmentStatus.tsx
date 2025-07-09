@@ -58,11 +58,6 @@ export default function NewAppointmentStatus() {
                 minute: '2-digit',
                 hour12: false,
                 timeZone
-              })} - {new Date(`2000-01-01T${slot?.end_time}:00Z`).toLocaleTimeString(undefined, {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false,
-                timeZone
               })}
             </Text>
           </View>
