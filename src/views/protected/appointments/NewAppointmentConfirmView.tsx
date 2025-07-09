@@ -6,6 +6,8 @@ import useAppointments from "../../../hooks/useAppointments";
 import { useNewAppointment } from "../../../context/NewAppointmentContext";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Check } from "lucide-react-native";
+import AppointmentStatusConfirmation from "../../../components/appointments/AppointmentStatusConfirmation";
 
 export default function NewAppointmentConfirmView() {
   const { navigate } = useNavigation<NativeStackNavigationProp<MyAppointmentsStackParamList>>()
@@ -36,15 +38,16 @@ export default function NewAppointmentConfirmView() {
 
       <Text className="text-3xl text-primary font-bold">Confirmar turno</Text>
       
-      <NewAppointmentStatus />
+      <AppointmentStatusConfirmation />
 
       <TouchableOpacity
         disabled={isLoading.createAppointment}
         onPress={handleConfirmAppointment}
-        className={`bg-secondary flex-row gap-2 items-center justify-center rounded-lg px-6 py-3 border-2 border-primary ${isLoading.createAppointment ? 'opacity-50' : ''}`}
+        className={`bg-primary flex-row gap-2 items-center justify-center rounded-lg px-6 py-3 border-2 border-primary ${isLoading.createAppointment ? 'opacity-50' : ''}`}
       >
-        {isLoading.createAppointment && <ActivityIndicator size="small" color="#006A71" />}
-        <Text className="text-xl text-primary text-center">Confirmar turno</Text>
+        {isLoading.createAppointment && <ActivityIndicator size="small" color="#fff" />}
+        <Check size={20} color="#fff" />
+        <Text className="text-xl text-white text-center font-bold">Confirmar turno</Text>
       </TouchableOpacity>
     </View>
   )
