@@ -50,17 +50,17 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
         <>
           {appointment.appointment_state_id === 1 && (
             <View className="justify-start items-start">
-              <Text className="bg-primary w-fit px-2 py-0 rounded-lg text-secondary font-semibold">Reservado</Text>
+              <Text className="bg-primary w-fit px-3 py-1 rounded-lg text-secondary font-semibold text-lg">Reservado</Text>
             </View>
           )}
           {appointment.appointment_state_id === 2 && (
             <View className="justify-start items-start">
-              <Text className="bg-red-500/60 w-fit px-2 py-0 rounded-lg text-black font-semibold">Cancelado</Text>
+              <Text className="bg-red-500/60 w-fit px-3 py-1 rounded-lg text-black font-semibold text-lg">Cancelado</Text>
             </View>
           )}
           {appointment.appointment_state_id === 3 && (
             <View className="justify-start items-start">
-              <Text className="bg-green-500/60 w-fit px-2 py-0 rounded-lg text-black font-semibold">Completado</Text>
+              <Text className="bg-green-500/60 w-fit px-3 py-1 rounded-lg text-black font-semibold text-lg">Completado</Text>
             </View>
           )}
         </>
@@ -68,18 +68,13 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
 
       {hasDeleteButton && appointment.appointment_state_id === 1 && (
         <>
-          <TouchableOpacity onPress={handleDeleteAppointment} className="absolute top-5 right-5 p-3 rounded-full bg-primary/20">
-            <Trash size={20} color="#006A71" />
+          <TouchableOpacity onPress={handleDeleteAppointment} className="absolute top-5 right-5 p-3 rounded-full bg-red-500">
+            <Trash size={20} color="#fff" />
           </TouchableOpacity>
 
           <Confirmation />
         </>
       )}
-      {appointment.appointment_state_id === 2 && (
-        <View className="absolute top-5 right-5 bg-red-500/20 rounded-full w-10 h-10 items-center justify-center">
-          <Text className="text-red-600 font-bold text-2xl">×</Text>
-        </View>
-)}
 
       <View className="flex-row gap-4 items-center">
         <View className="bg-[#006A71] rounded-full p-2">
@@ -87,21 +82,21 @@ export default function AppointmentCard({ appointment, hasDeleteButton = false, 
         </View>
 
         <View>
-          <Text className="text-primary text-xl font-bold">{appointment?.professional?.full_name}</Text>
-          <Text className="text-primary text-xl">{appointment?.specialty?.name}</Text>
+          <Text className="text-primary text-lg font-bold">{appointment?.professional?.full_name}</Text>
+          <Text className="text-primary text-[15px]">{appointment?.specialty?.name}</Text>
         </View>
       </View>
 
       <View className="bg-tertiary flex-row items-center rounded-[20px] p-3 justify-between">
         <View className="flex-row items-center gap-2">
           <Calendar size={20} color="#9ACBD0" />
-          <Text className="text-white text-xl font-semibold">{formattedDate}</Text>
+          <Text className="text-white text-md">{formattedDate}</Text>
         </View>
-
+        
         <View className="flex-row items-center gap-2">
           <Clock size={20} color="#9ACBD0" />
-          <Text className="text-white text-xl font-semibold">{formattedStartTime}</Text>
-        </View> 
+          <Text className="text-white text-md">{formattedStartTime}</Text>
+        </View>
       </View>
     </View>
   )
