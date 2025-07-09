@@ -7,11 +7,12 @@ import { AuthStackParamList } from "../../navigators/AuthStackNavigator";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
+import { Info } from "lucide-react-native";
 
 type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 export default function ResetPasswordView() {
-  const { confirmResetPassword } = useAuth();
+  const { confirmResetPassword, error } = useAuth();
   const navigation = useNavigation<Navigation>();
 
   const [form, setForm] = useState({
@@ -44,22 +45,34 @@ export default function ResetPasswordView() {
           <Text className="text-[#447f81]">Ingrese su nueva contraseña.</Text>
         </View>
 
-        <Input 
-          placeholder="******" 
-          label="Contraseña" 
-          onChange={handleChange} 
-          value={form.newPassword} 
-          name="newPassword" 
+        <Input
+          placeholder="******"
+          label="Contraseña"
+          onChange={handleChange}
+          value={form.newPassword}
+          name="newPassword"
           secureTextEntry
         />
-        <Input 
-          placeholder="******" 
-          label="Repite tu contraseña" 
-          onChange={handleChange} 
-          value={form.confirmPassword} 
-          name="confirmPassword" 
+        <Input
+          placeholder="******"
+          label="Repite tu contraseña"
+          onChange={handleChange}
+          value={form.confirmPassword}
+          name="confirmPassword"
           secureTextEntry
         />
+
+        {error
+          ? (
+            <View className="bg-red-500/10 px-3 py-2 rounded-lg flex-row gap-4 items-center w-full">
+              <Info size={20} color="#ee0000" />
+              <View className="flex-1">
+                <Text className="text-red-500 text-start">{error}</Text>
+              </View>
+            </View>
+          )
+          : null
+        }
         <Button text="Confirmar" onPress={handleResetCode} />
       </View>
 

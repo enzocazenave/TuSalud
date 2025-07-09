@@ -7,12 +7,13 @@ import { AuthStackParamList } from "../../navigators/AuthStackNavigator";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { Info } from "lucide-react-native";
 
 type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 export default function RecoverPasswordView() {
   const navigation = useNavigation<Navigation>();
-  const { requestRecoverPassword } = useAuth();
+  const { requestRecoverPassword, error } = useAuth();
   
   const [form, setForm] = useState({
     email: "",
@@ -50,6 +51,17 @@ export default function RecoverPasswordView() {
           value={form.email}
           name="email"
         />
+        {error
+          ? (
+            <View className="bg-red-500/10 px-3 py-2 rounded-lg flex-row gap-4 items-center w-full">
+              <Info size={20} color="#ee0000" />
+              <View className="flex-1">
+                <Text className="text-red-500 text-start">{error}</Text>
+              </View>
+            </View>
+          )
+          : null
+        }
         <Button text="Enviar código" onPress={handleSubmit} className="max-w-96" />
       </View>
     </View>

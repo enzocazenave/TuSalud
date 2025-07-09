@@ -7,11 +7,12 @@ import { AuthStackParamList } from "../../navigators/AuthStackNavigator";
 import { useNavigation } from "@react-navigation/native";
 import Button from "../../components/ui/Button";
 import { useAuth } from "../../context/AuthContext";
+import { Info } from "lucide-react-native";
 
 type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 export default function RecoverPasswordView() {
-  const { validateResetPasswordCode } = useAuth();
+  const { validateResetPasswordCode, error } = useAuth();
   const navigation = useNavigation<Navigation>();
   const [code, setCode] = useState<string>('');
 
@@ -45,6 +46,18 @@ export default function RecoverPasswordView() {
         cellsQtty={6}
         fillingCallback={fillingCallback}
       />
+
+      {error
+        ? (
+          <View className="bg-red-500/10 px-3 py-2 rounded-lg flex-row gap-4 items-center w-full">
+            <Info size={20} color="#ee0000" />
+            <View className="flex-1">
+              <Text className="text-red-500 text-start">{error}</Text>
+            </View>
+          </View>
+        )
+        : null
+      }
 
       <Button
         text="Verificar código"

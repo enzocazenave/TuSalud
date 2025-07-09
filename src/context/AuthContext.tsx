@@ -11,6 +11,8 @@ type AuthContextType = {
   validateResetPasswordCode: (code: string) => Promise<void>;
   confirmResetPassword: (newPassword: string, confirmPassword: string) => Promise<void>;
   isLoading: boolean;
+  error: string | null;
+  setError: (error: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -28,6 +30,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const [temporalResetPasswordData, setTemporalResetPasswordData] = useState({
     email: "",
@@ -47,7 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = async (fullName: string, email: string, password: string, confirmPassword: string) => {
     if (password !== confirmPassword) {
-      throw new Error('Las contraseñas no coinciden'); // TODO: Handle error
+      setError('Las contraseñas no coinciden');
     }
 
     try {
@@ -58,8 +61,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await AsyncStorage.setItem('accessToken', token);
       await AsyncStorage.setItem('patientId', userId.toString());
       setIsAuthenticated(true);
-    } catch (error) {
-      console.log(error); // TODO: Handle error
+      setError(null);
+    } catch (error: any) {
+      setError(errorParser(error));
     } finally {
       setIsLoading(false);
     }
@@ -74,8 +78,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await AsyncStorage.setItem('accessToken', token);
       await AsyncStorage.setItem('patientId', userId.toString());
       setIsAuthenticated(true);
-    } catch (error) {
-      console.log(error); // TODO: Handle error
+      setError(null);
+    } catch (error: any) {
+      setError(errorParser(error));
     } finally {
       setIsLoading(false);
     }
@@ -90,7 +95,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await AsyncStorage.removeItem('lastPushToken');
       setIsAuthenticated(false);
     } catch (error) {
-      console.log(error); // TODO: Handle error
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -104,8 +109,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         email: email, 
         code: "" 
       });
-    } catch (error) {
-      throw error; // TODO: Handle error
+      setError(null);
+    } catch (error: any) {
+      setError(errorParser(error));
+      throw new Error("Ocurrio un error");
     } finally {
       setIsLoading(false);
     }
@@ -121,8 +128,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         email: temporalResetPasswordData.email, 
         code 
       });
-    } catch (error) {
-      throw error; // TODO: Handle error
+      setError(null);
+    } catch (error: any) {
+      setError(errorParser(error));  
+      throw new Error("Ocurrio un error");
     } finally {
       setIsLoading(false);
     }
@@ -130,7 +139,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const confirmResetPassword = async (newPassword: string, confirmPassword: string) => {
     if (newPassword !== confirmPassword) {
-      throw new Error('Las contraseñas no coinciden'); // TODO: Handle error
+      setError('Las contraseñas no coinciden');
+      throw new Error("Las contraseñas no coinciden");  
     }
     
     try {
@@ -144,8 +154,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         email: "",
         code: ""
       });
-    } catch (error) {
-      throw error; // TODO: Handle error
+      setError(null);
+    } catch (error: any) {
+      setError(errorParser(error));
+      throw new Error("Ocurrio un error");
     } finally {
       setIsLoading(false);
     }
@@ -153,9 +165,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ 
-      isAuthenticated, register, login, logout, requestRecoverPassword, confirmResetPassword, validateResetPasswordCode, isLoading
+      isAuthenticated, register, login, logout, requestRecoverPassword, confirmResetPassword, validateResetPasswordCode, isLoading, error, setError
     }}>
       {children}
     </AuthContext.Provider>
   );
+}
+
+const errorParser = (error: any) => {
+  if (Array.isArray(error.response.data.error)) {
+    return error.response.data.error.map((e: any) => e.message).join(', ');
+  }
+
+  return error.response.data.error;
 }
