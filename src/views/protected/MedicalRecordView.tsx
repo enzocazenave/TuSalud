@@ -8,7 +8,7 @@ import { formatUtcToLocalDateTime } from "../../utils/date";
 import { useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "../../context/ThemeContext";
 
-const MedicalRecordItem = ({ item, theme }: { item: any; theme: string }) => {
+export const MedicalRecordItem = ({ item, theme }: { item: any; theme: string }) => {
   const formattedDate = formatUtcToLocalDateTime(item.createdAt);
 
   const openUrl = () => {

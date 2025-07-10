@@ -12,10 +12,10 @@ const getBaseURL = (): string => {
 
   const isIOSSimulator = isIOS && platformConstants?.model?.includes?.('Simulator');
 
-  if (isAndroidEmulator) return 'http://10.0.2.2:3000';
-  if (isIOSSimulator) return 'http://localhost:3000';
+  if (isAndroidEmulator) return 'https://backend-healthcare-professionals.onrender.com';
+  if (isIOSSimulator) return 'https://backend-healthcare-professionals.onrender.com';
 
-  return 'http://10.0.2.2:3000';
+  return 'https://backend-healthcare-professionals.onrender.com';
 };
 
 console.log(getBaseURL());

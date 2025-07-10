@@ -81,7 +81,7 @@ export default function WeeklySchedule() {
   return (
     <View className="rounded-xl gap-4">
       <View className="flex-row items-center justify-between">
-        <TouchableOpacity onPress={goToPreviousWeek}>
+        <TouchableOpacity onPress={goToPreviousWeek} testID='prev-week'>
           <ChevronLeft color={iconColor} size={28} />
         </TouchableOpacity>
 
@@ -89,7 +89,7 @@ export default function WeeklySchedule() {
           {monthName}
         </Text>
 
-        <TouchableOpacity onPress={goToNextWeek}>
+        <TouchableOpacity onPress={goToNextWeek} testID='next-week'>
           <ChevronRight color={iconColor} size={28} />
         </TouchableOpacity>
       </View>
