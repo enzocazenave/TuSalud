@@ -4,21 +4,27 @@ import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../../navigators/AuthStackNavigator";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../context/AuthContext";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Info } from "lucide-react-native";
 
 type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 export default function ResetPasswordView() {
-  const { confirmResetPassword, error } = useAuth();
+  const { confirmResetPassword, error, setError } = useAuth();
   const navigation = useNavigation<Navigation>();
 
   const [form, setForm] = useState({
     newPassword: "",
     confirmPassword: "",
   });
+
+  useFocusEffect(
+    useCallback(() => {
+      setError(null)
+    }, [])
+  )
 
   const handleChange = (field: string, value: string) => {
     setForm({ ...form, [field]: value });

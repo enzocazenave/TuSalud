@@ -2,10 +2,10 @@ import { Text, View } from "react-native";
 import GoBackButton from "../../components/ui/GoBackButton";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { AuthStackParamList } from "../../navigators/AuthStackNavigator";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Info } from "lucide-react-native";
 
@@ -13,11 +13,17 @@ type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 export default function RecoverPasswordView() {
   const navigation = useNavigation<Navigation>();
-  const { requestRecoverPassword, error } = useAuth();
-  
+  const { requestRecoverPassword, error, setError } = useAuth();
+
   const [form, setForm] = useState({
     email: "",
   });
+
+  useFocusEffect(
+    useCallback(() => {
+      setError(null)
+    }, [])
+  )
 
   const handleChange = (field: string, value: string) => {
     setForm({ ...form, [field]: value });
@@ -43,10 +49,10 @@ export default function RecoverPasswordView() {
           <Text className="text-2xl text-[#006A71] font-medium">Recuperar contraseña</Text>
           <Text className="text-[#447f81]">Por favor ingrese su correo electrónico para cambiar su contraseña.</Text>
         </View>
-        
-        <Input 
-          label="Correo electrónico" 
-          placeholder="Correo electrónico" 
+
+        <Input
+          label="Correo electrónico"
+          placeholder="Correo electrónico"
           onChange={handleChange}
           value={form.email}
           name="email"

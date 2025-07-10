@@ -1,10 +1,10 @@
 import { Text, View } from "react-native";
 import GoBackButton from "../../components/ui/GoBackButton";
 import CodeInput from "../../components/ui/CodeInput";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../../navigators/AuthStackNavigator";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Button from "../../components/ui/Button";
 import { useAuth } from "../../context/AuthContext";
 import { Info } from "lucide-react-native";
@@ -12,9 +12,15 @@ import { Info } from "lucide-react-native";
 type Navigation = NativeStackNavigationProp<AuthStackParamList>
 
 export default function RecoverPasswordView() {
-  const { validateResetPasswordCode, error } = useAuth();
+  const { validateResetPasswordCode, error, setError } = useAuth();
   const navigation = useNavigation<Navigation>();
   const [code, setCode] = useState<string>('');
+
+  useFocusEffect(
+    useCallback(() => {
+      setError(null);
+    }, [])
+  )
 
   const fillingCallback = async (text: string) => {
     setCode(text)
