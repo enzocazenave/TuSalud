@@ -7,6 +7,7 @@ import {
   View,
   Pressable,
 } from 'react-native';
+import { useTheme } from '../../context/ThemeContext';
 
 interface Props {
   visible: boolean;
@@ -25,6 +26,9 @@ export default function ConfirmationModal({
   onCancel,
   onConfirm
 }: Props) {
+  const { theme } = useTheme();
+  const iconColor = theme === 'dark' ? '#FFFFFF' : '#9ACBD0';
+
   return (
     <Modal transparent visible={visible} animationType="fade" onRequestClose={onCancel}>
       <Pressable
@@ -32,20 +36,25 @@ export default function ConfirmationModal({
         onPress={onCancel}
       >
         <Pressable
-          className="bg-white w-[85%] rounded-2xl p-6 shadow-lg relative items-center"
+          className="bg-white dark:bg-darktertiary w-[85%] rounded-2xl p-6 shadow-lg relative items-center"
           onPress={(e) => e.stopPropagation()}
         >
-          <TouchableOpacity onPress={onCancel} className="absolute top-4 left-4 p-2 w-12 h-12 flex justify-center items-center rounded-full bg-primary">
-            <ChevronLeft size={30} color="#9ACBD0" />
+          <TouchableOpacity
+            onPress={onCancel}
+            className="absolute top-4 left-4 p-2 w-12 h-12 flex justify-center items-center rounded-full bg-primary dark:bg-darkprimary"
+          >
+            <ChevronLeft size={30} color={iconColor} />
           </TouchableOpacity>
 
-          <Text className="text-xl font-bold text-primary mt-2">{title}</Text>
+          <Text className="text-xl font-bold text-primary dark:text-darkprimary mt-2">{title}</Text>
 
-          <Text className="text-center mt-4 text-base text-black/70">{message}</Text>
+          <Text className="text-center mt-4 text-base text-primary/70 dark:text-darkprimary/70">
+            {message}
+          </Text>
 
           <TouchableOpacity
             onPress={onConfirm}
-            className="bg-primary mt-6 px-6 py-3 rounded-xl shadow-md"
+            className="bg-primary dark:bg-darkprimary mt-6 px-6 py-3 rounded-xl shadow-md"
           >
             <Text className="text-white font-bold text-base">{confirmText}</Text>
           </TouchableOpacity>

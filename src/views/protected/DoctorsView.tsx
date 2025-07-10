@@ -21,10 +21,10 @@ export default function DoctorsView() {
   }, [])
 
   return (
-    <View className="pt-9 px-5 gap-4">
+    <View className="pt-9 px-5 gap-4 bg-quaternary dark:bg-darksecondary flex-1">
       <View className="flex-row items-center justify-between">
         <GoBackButton />
-        <Text className="text-4xl text-primary font-bold">Cartilla</Text>
+        <Text className="text-4xl text-primary font-bold dark:text-darkprimary">Cartilla</Text>
       </View>
 
       {isLoading.specialties ? (
@@ -90,10 +90,10 @@ const ProfessionalItem = ({ item }: { item: any }) => {
 
   return (
     <View className="p-5 gap-2">
-      <Text className="text-primary text-lg font-bold">{item.full_name}</Text>
+      <Text className="text-primary text-lg font-bold dark:text-darkprimary">{item.full_name}</Text>
 
       <View>
-        <Text className="text-primary text-lg font-semibold">Horarios</Text>
+        <Text className="text-primary text-lg font-semibold dark:text-darkprimary">Horarios</Text>
 
         {isLoading.professionalSchedules ? (
           <ActivityIndicator size="small" color="#006A71" />

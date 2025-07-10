@@ -1,28 +1,39 @@
 import '../gesture-handler'
 import './global.css'
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StatusBar } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { AuthProvider } from './context/AuthContext';
 import { RootNavigation } from './navigators/RootNavigation';
-import RNBootSplash from 'react-native-bootsplash'
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 
 export const App = () => {
-  useEffect(() => {
-    RNBootSplash.hide({ fade: true })
-  }, [])
+  return (
+    <ThemeProvider>
+      <MainApp />
+    </ThemeProvider>
+  )
+}
+
+const MainApp = () => {
+  const { theme } = useTheme();
 
   return (
     <React.Fragment>
-      <StatusBar barStyle="dark-content" />
-      
+      <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
+
       <SafeAreaProvider>
-        <SafeAreaView className="flex-1" style={{ backgroundColor: '#9ACBD0' }}>
+        <SafeAreaView
+          style={{
+            flex: 1,
+            backgroundColor: theme === 'dark' ? '#1F2937' : '#9ACBD0',
+          }}
+        >
           <AuthProvider>
             <RootNavigation />
           </AuthProvider>
         </SafeAreaView>
       </SafeAreaProvider>
     </React.Fragment>
-  )
-}
+  );
+};

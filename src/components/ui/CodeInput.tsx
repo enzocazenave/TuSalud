@@ -1,5 +1,10 @@
 import { View, Text } from 'react-native';
-import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
+import {
+  CodeField,
+  Cursor,
+  useBlurOnFulfill,
+  useClearByFocusCell
+} from 'react-native-confirmation-code-field';
 import { useState } from 'react';
 
 interface Props {
@@ -18,11 +23,13 @@ export default function CodeInput({ cellsQtty, fillingCallback }: Props) {
   const handleOnChangeText = (text: string) => {
     setValue(text);
     fillingCallback(text);
-  }
+  };
 
   return (
     <View className="items-center justify-center mt-8">
-      <Text className="mb-4 text-xl text-primary font-bold">Ingresá el código</Text>
+      <Text className="mb-4 text-xl text-primary dark:text-darkprimary font-bold">
+        Ingresá el código
+      </Text>
 
       <CodeField
         ref={ref}
@@ -37,11 +44,15 @@ export default function CodeInput({ cellsQtty, fillingCallback }: Props) {
           <View
             key={index}
             onLayout={getCellOnLayoutHandler(index)}
-            className={`w-12 h-12 border-2 rounded-lg items-center justify-center ${
-              isFocused ? 'border-primary' : 'border-gray-300'
-            }`}
+            className={`w-12 h-12 border-2 rounded-lg items-center justify-center
+              ${isFocused
+                ? 'border-primary dark:border-darkprimary'
+                : 'border-gray-300 dark:border-gray-600'}
+            `}
           >
-            <Text className="text-xl">{symbol || (isFocused ? <Cursor /> : '')}</Text>
+            <Text className="text-xl text-primary dark:text-darkprimary">
+              {symbol || (isFocused ? <Cursor /> : '')}
+            </Text>
           </View>
         )}
       />

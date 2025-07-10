@@ -8,30 +8,30 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GoBackButton from "../../../components/ui/GoBackButton";
 
 export default function MyNextAppointmentsView() {
-  const { bottom } = useSafeAreaInsets()
-  const { getNextAppointments, isLoading } = useAppointments()
-  const [nextAppointments, setNextAppointments] = useState<PatientAppointment[]>([])
+  const { bottom } = useSafeAreaInsets();
+  const { getNextAppointments, isLoading } = useAppointments();
+  const [nextAppointments, setNextAppointments] = useState<PatientAppointment[]>([]);
 
   useFocusEffect(
     useCallback(() => {
-      getNextAppointments().then(setNextAppointments)
+      getNextAppointments().then(setNextAppointments);
     }, [])
-  )
+  );
 
   const renderAppointment = ({ item: appointment }: { item: PatientAppointment }) => (
     <AppointmentCard
       appointment={appointment}
       hasDeleteButton
       onDelete={() => {
-        getNextAppointments().then(setNextAppointments)
+        getNextAppointments().then(setNextAppointments);
       }}
     />
-  )
+  );
 
   return (
-    <View className="pt-9 px-5 gap-4">
+    <View className="pt-9 px-5 gap-4 flex-1 bg-quaternary dark:bg-darksecondary">
       <GoBackButton />
-      <Text className="text-4xl text-primary font-bold">Turnos próximos</Text>
+      <Text className="text-4xl text-primary dark:text-darkprimary font-bold">Turnos próximos</Text>
 
       {isLoading.nextAppointments ? (
         <ActivityIndicator size="large" color="#006A71" />
@@ -40,13 +40,13 @@ export default function MyNextAppointmentsView() {
           showsVerticalScrollIndicator={false}
           data={nextAppointments}
           renderItem={renderAppointment}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={{ gap: 16, paddingBottom: bottom + 150 }}
           ListEmptyComponent={() => (
-            <Text className="text-primary text-center">No hay turnos próximos</Text>
+            <Text className="text-primary dark:text-darkprimary text-center">No hay turnos próximos</Text>
           )}
         />
       )}
     </View>
-  )
+  );
 }

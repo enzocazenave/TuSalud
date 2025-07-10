@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import useAppointments from '../../hooks/useAppointments';
@@ -6,6 +6,7 @@ import { PatientAppointment } from '../../types/PatientAppointment';
 import SmallAppointmentCard from './SmallAppointmentCard';
 import { useFocusEffect } from '@react-navigation/native';
 import { formatUtcToLocalDate, getMonthNameFromDateString, getUserTimeZone } from '../../utils/date';
+import { useTheme } from '../../context/ThemeContext';
 
 interface DayItem {
   date: string;
@@ -42,18 +43,21 @@ const generateWeek = (referenceDate: Date): DayItem[] => {
 export default function WeeklySchedule() {
   const [weekStartDate, setWeekStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(getTodayISO());
-  const [appointments, setAppointments] = useState<PatientAppointment[]>([])
+  const [appointments, setAppointments] = useState<PatientAppointment[]>([]);
+  const {theme} = useTheme(); // <- Detectar modo del sistema
 
-  const { getAppointmentsByDate, isLoading } = useAppointments()
+  const isDark = theme === 'dark';
+  const iconColor = isDark ? '#5CC8D7' : '#006A71';
+
+  const { getAppointmentsByDate, isLoading } = useAppointments();
 
   useFocusEffect(
     useCallback(() => {
-      getAppointmentsByDate(selectedDate).then(setAppointments)
+      getAppointmentsByDate(selectedDate).then(setAppointments);
     }, [selectedDate])
-  )
+  );
 
   const days = generateWeek(weekStartDate);
-
   const monthName = getMonthNameFromDateString(selectedDate);
 
   const goToPreviousWeek = () => {
@@ -72,21 +76,21 @@ export default function WeeklySchedule() {
 
   const handleDayPress = async (date: string) => {
     setSelectedDate(date);
-  }
+  };
 
   return (
     <View className="rounded-xl gap-4">
       <View className="flex-row items-center justify-between">
         <TouchableOpacity onPress={goToPreviousWeek}>
-          <ChevronLeft color="#006A71" size={28} />
+          <ChevronLeft color={iconColor} size={28} />
         </TouchableOpacity>
 
-        <Text className="text-xl font-bold text-primary">
+        <Text className="text-xl font-bold text-primary dark:text-darkprimary">
           {monthName}
         </Text>
 
         <TouchableOpacity onPress={goToNextWeek}>
-          <ChevronRight color="#006A71" size={28} />
+          <ChevronRight color={iconColor} size={28} />
         </TouchableOpacity>
       </View>
 
@@ -105,20 +109,22 @@ export default function WeeklySchedule() {
               onPress={() => handleDayPress(day.date)}
               className="items-center mx-3"
             >
-              <Text className="text-sm text-primary">{day.short}</Text>
+              <Text className="text-sm text-primary dark:text-darkprimary">{day.short}</Text>
 
               <View
-                className={`w-10 h-10 items-center ${isSelected && !isToday ? 'bg-primary/10 rounded-md' : ''} justify-center mt-1 ${isToday ? 'bg-primary rounded-full ' : ''}`}
+                className={`w-10 h-10 items-center justify-center mt-1
+                  ${isSelected && !isToday ? 'bg-primary/10 dark:bg-darkprimary/10 rounded-md' : ''}
+                  ${isToday ? 'bg-primary dark:bg-darkprimary rounded-full' : ''}`}
               >
                 <Text
-                  className={`text-lg font-bold ${isToday ? 'text-white' : 'text-primary'}`}
+                  className={`text-lg font-bold ${isToday ? 'text-white' : 'text-primary dark:text-darkprimary'}`}
                 >
                   {day.day}
                 </Text>
               </View>
 
               {isSelected && (
-                <View className="h-[2px] w-full bg-primary mt-1" />
+                <View className="h-[2px] w-full bg-primary dark:bg-darkprimary mt-1" />
               )}
             </TouchableOpacity>
           );
@@ -136,11 +142,11 @@ export default function WeeklySchedule() {
         ListEmptyComponent={
           isLoading.appointmentsByDate ? (
             <View className="items-center justify-center">
-              <ActivityIndicator size="large" color="#006A71" />
+              <ActivityIndicator size="large" color={iconColor} />
             </View>
           ) : (
             <View className="flex-1 items-center justify-center">
-              <Text className="text-primary text-lg">No hay turnos</Text>
+              <Text className="text-primary dark:text-darkprimary text-lg">No hay turnos</Text>
             </View>
           )
         }

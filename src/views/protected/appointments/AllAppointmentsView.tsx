@@ -8,31 +8,31 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GoBackButton from "../../../components/ui/GoBackButton";
 
 export default function AllAppointmentsView() {
-  const { bottom } = useSafeAreaInsets()
-  const { getAppointments, isLoading } = useAppointments()
-  const [appointments, setAppointments] = useState<PatientAppointment[]>([])
+  const { bottom } = useSafeAreaInsets();
+  const { getAppointments, isLoading } = useAppointments();
+  const [appointments, setAppointments] = useState<PatientAppointment[]>([]);
 
   useFocusEffect(
     useCallback(() => {
-      getAppointments().then(setAppointments)
+      getAppointments().then(setAppointments);
     }, [])
-  )
+  );
 
   const renderAppointment = ({ item: appointment }: { item: PatientAppointment }) => (
     <AppointmentCard
       appointment={appointment}
       hasDeleteButton
       onDelete={() => {
-        getAppointments().then(setAppointments)
+        getAppointments().then(setAppointments);
       }}
       isHistory
     />
-  )
+  );
 
   return (
-    <View className="pt-9 px-5 gap-4">
+    <View className="pt-9 px-5 gap-4 flex-1 bg-quaternary dark:bg-darksecondary">
       <GoBackButton />
-      <Text className="text-4xl text-primary font-bold">Historial de turnos</Text>
+      <Text className="text-4xl text-primary dark:text-darkprimary font-bold">Historial de turnos</Text>
 
       {isLoading.appointments ? (
         <ActivityIndicator size="large" color="#006A71" />
@@ -41,13 +41,13 @@ export default function AllAppointmentsView() {
           showsVerticalScrollIndicator={false}
           data={appointments}
           renderItem={renderAppointment}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={{ gap: 16, paddingBottom: bottom + 150 }}
           ListEmptyComponent={() => (
-            <Text className="text-primary text-center">No hay turnos</Text>
+            <Text className="text-primary dark:text-darkprimary text-center">No hay turnos</Text>
           )}
         />
       )}
     </View>
-  )
+  );
 }

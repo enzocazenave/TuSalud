@@ -28,10 +28,10 @@ const NotificationsScreen = () => {
   const { isLoading, notifications, markAsRead } = useNotificationsScreen()
 
   return (
-    <View className="pt-9 px-5 gap-4">
+    <View className="pt-9 px-5 gap-4 flex-1 bg-quaternary dark:bg-darksecondary">
       <View className="flex-row items-center justify-between">
         <GoBackButton />
-        <Text className="text-4xl text-primary font-bold">Notificaciones</Text>
+        <Text className="text-4xl text-primary font-bold dark:text-darkprimary">Notificaciones</Text>
       </View>
 
       <FlatList
@@ -46,23 +46,32 @@ const NotificationsScreen = () => {
   )
 }
 
-const NotificationItem = ({ notification, markAsRead }: { notification: any, markAsRead: () => void }) => {
-  const timezone = getUserTimeZone()
-  const formattedDate = formatUtcToLocalDateTime(
-    notification.createdAt, 
-    timezone, 
-    { hour12: false, hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'long', year: 'numeric' }
-  )
+const NotificationItem = ({
+  notification,
+  markAsRead
+}: {
+  notification: any;
+  markAsRead: () => void;
+}) => {
+  const timezone = getUserTimeZone();
+  const formattedDate = formatUtcToLocalDateTime(notification.createdAt, timezone, {
+    hour12: false,
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
 
   return (
     <Swipeable
       renderRightActions={() => (
-        <TouchableOpacity 
-          className="bg-primary justify-center items-center px-6 rounded-l-xl"
+        <TouchableOpacity
           onPress={markAsRead}
+          className="bg-primary justify-center items-center px-6 rounded-l-xl"
           style={{
             transform: [{ translateX: -2 }],
-            shadowColor: '#000',
+            shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
@@ -70,20 +79,20 @@ const NotificationItem = ({ notification, markAsRead }: { notification: any, mar
           }}
         >
           <View className="items-center">
-            <Check color="white" size={28} />
+            <Check color="#FFF" size={28} />
             <Text className="text-white text-sm mt-1">Leído</Text>
           </View>
         </TouchableOpacity>
       )}
     >
-      <View className="border-b border-primary py-4 gap-1">
-        <Text className={`text-lg text-primary`}>
+      <View className="border-b border-primary dark:border-darkprimary py-4 px-2 gap-1 bg-white dark:bg-darksecondary">
+        <Text className="text-lg text-primary dark:text-darkprimary">
           {notification.message}
         </Text>
-        <Text className="text-sm text-primary">
+        <Text className="text-sm text-primary dark:text-darkprimary/80">
           {formattedDate}
         </Text>
       </View>
     </Swipeable>
-  )
-}
+  );
+};

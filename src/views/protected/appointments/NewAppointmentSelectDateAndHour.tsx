@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { MyAppointmentsStackParamList } from "./MyAppointmentsView";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { formatUtcToLocalDate, formatUtcToLocalDateTime, getUserTimeZone } from "../../../utils/date";
+import { useTheme } from "../../../context/ThemeContext";
 
 LocaleConfig.locales['es'] = {
   monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -46,6 +47,7 @@ export default function NewAppointmentSelectDateAndHour() {
   const [selectedSlot, setSelectedSlot] = useState<any>(null);
   const { navigate } = useNavigation<NativeStackNavigationProp<MyAppointmentsStackParamList>>();
   const timeZone = getUserTimeZone();
+  const { theme } = useTheme()
 
   const { getProfessionalAvailability, isLoading, handleLoading } = useProfessionals();
 
@@ -136,12 +138,14 @@ export default function NewAppointmentSelectDateAndHour() {
   }, [selectedSlot]);
 
   return (
-    <ScrollView 
-      contentContainerClassName="pt-9 px-5 gap-8" contentContainerStyle={{ paddingBottom: bottom + 60 }}>
+    <ScrollView
+      contentContainerClassName="pt-9 px-5 gap-8 bg-quaternary dark:bg-darksecondary"
+      contentContainerStyle={{ paddingBottom: bottom + 60 }}
+    >
       <View className="flex-row items-center justify-between">
         <GoBackButton callback={() => {
-          setSelectedSlot(null)
-          setSlot(null)
+          setSelectedSlot(null);
+          setSlot(null);
         }} />
         <Text className="text-primary text-lg">Paso 4 de 5</Text>
       </View>
@@ -149,23 +153,33 @@ export default function NewAppointmentSelectDateAndHour() {
       <NewAppointmentStatus />
 
       <View className="gap-4">
-        <Text className="text-3xl text-primary font-bold">Seleccionar turno</Text>
+        <Text className="text-3xl text-primary dark:text-darkprimary font-bold">Seleccionar turno</Text>
+
 
         <Calendar
+          key={theme}
           markedDates={markedDates}
           current={formatUtcToLocalDate(currentMonth, timeZone)}
           onDayPress={handleDayPress}
           onMonthChange={handleMonthChange}
           theme={{
+            backgroundColor: theme === "dark" ? "#1E2022" : "#ffffff",
+            calendarBackground: theme === "dark" ? "#1E2022" : "#ffffff",
+            textSectionTitleColor: theme === "dark" ? "#8FA6B2" : "#7a92a5",
             selectedDayBackgroundColor: "#006A71",
+            selectedDayTextColor: theme === "dark" ? "#ffffff" : "#fff",
             todayTextColor: "#006A71",
+            dayTextColor: theme === "dark" ? "#ffffff" : "#2d4150",
+            textDisabledColor: theme === "dark" ? "#555" : "#d9e1e8",
             arrowColor: "#006A71",
-            monthTextColor: "#006A71",
+            monthTextColor: theme === 'dark' ? "#5CC8D7" :"#006A71",
             textMonthFontSize: 16,
-            textMonthFontWeight: "bold"
+            textMonthFontWeight: "bold",
+            textDayFontSize: 16,
+            textDayHeaderFontSize: 14,
           }}
           style={{
-            borderRadius: 10
+            borderRadius: 10,
           }}
           disableArrowLeft={new Date(currentMonth).getMonth() === new Date().getMonth()}
         />
@@ -185,14 +199,12 @@ export default function NewAppointmentSelectDateAndHour() {
           <Text className="text-red-500 mt-2">{error}</Text>
         )}
 
-        <Text className="text-xl mt-4 text-primary font-semibold">
+        <Text className="text-xl mt-4 text-primary dark:text-darkprimary font-semibold">
           Horarios para {formatUtcToLocalDateTime(selectedDate + 'T00:00:00', timeZone, {
             weekday: 'long',
             day: '2-digit',
             month: '2-digit',
-            year: 'numeric',
-            hour: undefined,
-            minute: undefined
+            year: 'numeric'
           })}
         </Text>
 
@@ -207,19 +219,19 @@ export default function NewAppointmentSelectDateAndHour() {
             scrollEnabled={false}
             numColumns={2}
             renderItem={({ item }) => {
-              const isItemSelected = isSlotSelected(item)
+              const isItemSelected = isSlotSelected(item);
 
               return (
                 <TouchableOpacity
                   style={{ flex: 1 }}
-                  className={`px-4 py-2 rounded-lg flex-row items-center gap-2 border-[2px justify-center ${isSlotSelected(item)
-                    ? 'border-2 border-primary bg-secondary text-primary'
-                    : 'bg-primary/80 border-2 border-primary/80'
+                  className={`px-4 py-2 rounded-lg flex-row items-center gap-2 justify-center border-2 ${isItemSelected
+                    ? 'bg-secondary border-primary'
+                    : 'bg-primary/80 border-primary/80'
                     }`}
                   onPress={() => setSelectedSlot({ date: selectedDate, ...item })}
                 >
                   {isItemSelected && (
-                    <CircleCheck 
+                    <CircleCheck
                       size={15}
                       strokeWidth={3}
                       color="#006A71"
@@ -235,7 +247,7 @@ export default function NewAppointmentSelectDateAndHour() {
                     })}
                   </Text>
                 </TouchableOpacity>
-              )
+              );
             }}
           />
         )}

@@ -39,15 +39,19 @@ export default function RecoverPasswordView() {
   }
 
   return (
-    <View className="flex flex-1 gap-12 items-center px-12 pt-12">
+    <View className="flex flex-1 gap-12 items-center px-12 pt-12 bg-quaternary dark:bg-darksecondary">
       <View className="w-full">
         <GoBackButton absolute={false} />
       </View>
 
       <View className="flex gap-5 justify-center items-center w-full flex-col">
         <View>
-          <Text className="text-2xl text-[#006A71] font-medium">Recuperar contraseña</Text>
-          <Text className="text-[#447f81]">Por favor ingrese su correo electrónico para cambiar su contraseña.</Text>
+          <Text className="text-2xl text-primary dark:text-darkprimary font-medium">
+            Recuperar contraseña
+          </Text>
+          <Text className="text-secondary dark:text-darksecondary">
+            Por favor ingrese su correo electrónico para cambiar su contraseña.
+          </Text>
         </View>
 
         <Input
@@ -57,19 +61,18 @@ export default function RecoverPasswordView() {
           value={form.email}
           name="email"
         />
-        {error
-          ? (
-            <View className="bg-red-500/10 px-3 py-2 rounded-lg flex-row gap-4 items-center w-full">
-              <Info size={20} color="#ee0000" />
-              <View className="flex-1">
-                <Text className="text-red-500 text-start">{error}</Text>
-              </View>
+
+        {error && (
+          <View className="bg-red-500/10 px-3 py-2 rounded-lg flex-row gap-4 items-center w-full">
+            <Info size={20} color="#ee0000" />
+            <View className="flex-1">
+              <Text className="text-red-500 text-start">{error}</Text>
             </View>
-          )
-          : null
-        }
+          </View>
+        )}
+
         <Button text="Enviar código" onPress={handleSubmit} className="max-w-96" />
       </View>
     </View>
-  )
+  );
 }
