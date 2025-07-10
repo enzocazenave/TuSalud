@@ -1,17 +1,17 @@
-import { Text, View, TouchableOpacity, Image } from "react-native";
-import Button from "../../components/ui/Button";
-import Input from "../../components/ui/Input";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { AuthStackParamList } from "../../navigators/AuthStackNavigator";
-import { useCallback, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
-import { AlertTriangle, Info } from "lucide-react-native";
+import {Text, View, TouchableOpacity, Image} from 'react-native';
+import Button from '../../components/ui/Button';
+import Input from '../../components/ui/Input';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {AuthStackParamList} from '../../navigators/AuthStackNavigator';
+import {useCallback, useState} from 'react';
+import {useAuth} from '../../context/AuthContext';
+import {AlertTriangle, Info} from 'lucide-react-native';
 
-type Navigation = NativeStackNavigationProp<AuthStackParamList>
+type Navigation = NativeStackNavigationProp<AuthStackParamList>;
 
 export default function LoginView() {
-  const { login, error, setError } = useAuth();
+  const {login, error, setError} = useAuth();
   const navigation = useNavigation<Navigation>();
 
   const [credentials, setCredentials] = useState({
@@ -21,26 +21,26 @@ export default function LoginView() {
 
   useFocusEffect(
     useCallback(() => {
-      setError(null)
-    }, [])
-  )
+      setError(null);
+    }, []),
+  );
 
   const handleChange = (field: string, value: string) => {
-    setCredentials((prev) => ({ ...prev, [field]: value }));
-  }
+    setCredentials(prev => ({...prev, [field]: value}));
+  };
 
   const handleSubmit = async () => {
     if (credentials.email === '' || credentials.password === '') {
       setError('El correo electrónico o la contraseña no puede estar vacío');
-      return
+      return;
     }
 
     await login(credentials.email, credentials.password);
-  }
+  };
 
   return (
     <View className="flex flex-1 gap-12 items-center justify-center px-12">
-      <View className="bg-[#006A71] rounded-full">
+      <View className="rounded-full bg-primary dark:bg-tertiary">
         <Image
           className="size-36"
           resizeMode="cover"
@@ -49,7 +49,9 @@ export default function LoginView() {
       </View>
 
       <View className="flex gap-8 items-center justify-center w-full">
-        <Text className="text-center text-2xl text-primary font-bold">Iniciar sesión</Text>
+        <Text className="text-center text-2xl text-primary dark:text-secondary font-bold">
+          Iniciar sesión
+        </Text>
 
         <Input
           label="Correo electrónico"
@@ -65,37 +67,31 @@ export default function LoginView() {
           secureTextEntry
         />
 
-        {error
-          ? (
-            <View className="bg-red-500/10 px-3 py-2 rounded-lg flex-row gap-4 items-center w-full">
-              <Info size={20} color="#ee0000" />
-              <View className="flex-1">
-                <Text className="text-red-500 text-start">{error}</Text>
-              </View>
+        {error ? (
+          <View className="bg-red-500/10 px-3 py-2 rounded-lg flex-row gap-4 items-center w-full">
+            <Info size={20} color="#ee0000" />
+            <View className="flex-1">
+              <Text className="text-red-500 text-start">{error}</Text>
             </View>
-          )
-          : null
-        }
+          </View>
+        ) : null}
 
-
-        <Button
-          text="Iniciar sesión"
-          onPress={handleSubmit}
-        />
+        <Button text="Iniciar sesión" onPress={handleSubmit} />
       </View>
 
       <View className="flex flex-col gap-4">
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Register')}
-        >
-          <Text className="text-center text-xl text-[#006A71]">¿No tienes cuenta? Regístrate</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Text className="text-center text-xl text-primary dark:text-secondary">
+            ¿No tienes cuenta? Regístrate
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('RecoverPassword')}
-        >
-          <Text className="text-center text-xl text-[#006A71]">Olvidé mi contraseña</Text>
+          onPress={() => navigation.navigate('RecoverPassword')}>
+          <Text className="text-center text-xl text-primary dark:text-secondary">
+            Olvidé mi contraseña
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
-  )
+  );
 }

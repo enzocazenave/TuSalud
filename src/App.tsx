@@ -4,25 +4,38 @@ import React, { useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { RootNavigation } from './navigators/RootNavigation';
 import RNBootSplash from 'react-native-bootsplash'
 
-export const App = () => {
-  useEffect(() => {
-    RNBootSplash.hide({ fade: true })
-  }, [])
+const AppContent = () => {
+  const { theme } = useTheme();
 
   return (
-    <React.Fragment>
-      <StatusBar barStyle="dark-content" />
-      
+    <>
+      <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
       <SafeAreaProvider>
-        <SafeAreaView className="flex-1" style={{ backgroundColor: '#9ACBD0' }}>
+        <SafeAreaView
+          className={`${theme === 'dark' ? 'dark' : ''} flex-1`}
+          style={{ backgroundColor: theme === 'dark' ? '#121212' : '#9ACBD0' }}
+        >
           <AuthProvider>
             <RootNavigation />
           </AuthProvider>
         </SafeAreaView>
       </SafeAreaProvider>
-    </React.Fragment>
-  )
-}
+    </>
+  );
+};
+
+export const App = () => {
+  useEffect(() => {
+    RNBootSplash.hide({ fade: true });
+  }, []);
+
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+};

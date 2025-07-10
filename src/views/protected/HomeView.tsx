@@ -1,72 +1,82 @@
-import { Text, TouchableOpacity, View } from "react-native";
-import AppointmentCard from "../../components/appointments/AppointmentCard";
-import useAppointments from "../../hooks/useAppointments";
-import { useCallback, useState } from "react";
-import { PatientAppointment } from "../../types/PatientAppointment";
-import { Plus } from "lucide-react-native";
-import WeeklyCalendarAppointments from "../../components/appointments/WeeklyCalendarAppointments";
-import { useFocusEffect } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { BottomTabParamList } from "../../navigators/BottomTabNavigator";
+import {Text, TouchableOpacity, View} from 'react-native';
+import AppointmentCard from '../../components/appointments/AppointmentCard';
+import useAppointments from '../../hooks/useAppointments';
+import {useCallback, useState} from 'react';
+import {PatientAppointment} from '../../types/PatientAppointment';
+import {Plus} from 'lucide-react-native';
+import WeeklyCalendarAppointments from '../../components/appointments/WeeklyCalendarAppointments';
+import {useFocusEffect} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {BottomTabParamList} from '../../navigators/BottomTabNavigator';
 
 export default function HomeView() {
-  const navigation = useNavigation<NativeStackNavigationProp<BottomTabParamList>>()
-  const { getMoreRecentAppointment } = useAppointments()
-  const [recentAppointment, setRecentAppointment] = useState<PatientAppointment | null>(null)
+  const navigation =
+    useNavigation<NativeStackNavigationProp<BottomTabParamList>>();
+  const {getMoreRecentAppointment} = useAppointments();
+  const [recentAppointment, setRecentAppointment] =
+    useState<PatientAppointment | null>(null);
 
   useFocusEffect(
     useCallback(() => {
-      getMoreRecentAppointment().then(setRecentAppointment)
-    }, [])
-  )
+      getMoreRecentAppointment().then(setRecentAppointment);
+    }, []),
+  );
 
   const renderRecentAppointmentOrNewAppointment = () => {
     if (recentAppointment) {
-      return <AppointmentCard appointment={recentAppointment} />
+      return <AppointmentCard appointment={recentAppointment} />;
     }
 
-    return <NewAppointmentCard />
-  }
+    return <NewAppointmentCard />;
+  };
 
   return (
     <View className="pt-9 px-5 gap-9">
       <View className="gap-4">
         <View className="flex-row justify-between items-center">
-          <Text className="text-4xl text-primary font-bold">Próximo Turno</Text>
-          <TouchableOpacity onPress={() => { navigation.navigate('MyAppointments', { screen: 'NextAppointments', initial: false }) }}>
-            <Text className="text-primary">Ver todos</Text>
+          <Text className="text-4xl text-primary dark:text-secondary font-bold">
+            Próximo Turno
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('MyAppointments', {
+                screen: 'NextAppointments',
+                initial: false,
+              });
+            }}>
+            <Text className="text-primary dark:text-secondary">Ver todos</Text>
           </TouchableOpacity>
         </View>
-        
+
         {renderRecentAppointmentOrNewAppointment()}
       </View>
-      
-      <View className="bg-primary h-[2px] w-full"></View>
+
+      <View className="bg-primary dark:bg-gray-700 h-[2px] w-full"></View>
 
       <WeeklyCalendarAppointments />
     </View>
-  )
+  );
 }
 
 const NewAppointmentCard = () => {
-  const { navigate } = useNavigation<NativeStackNavigationProp<BottomTabParamList>>()
+  const {navigate} =
+    useNavigation<NativeStackNavigationProp<BottomTabParamList>>();
 
   const handlePress = () => {
-    navigate(
-      'MyAppointments', 
-      { 
-        screen: 'NewAppointmentSelectPrepaid', 
-        initial: false
-      }
-    )
-  }
+    navigate('MyAppointments', {
+      screen: 'NewAppointmentSelectPrepaid',
+      initial: false,
+    });
+  };
 
   return (
-    <TouchableOpacity className="bg-secondary rounded-[20px] items-center justify-center h-[140px]" onPress={handlePress}>
-      <View className="bg-primary rounded-full">
+    <TouchableOpacity
+      className="bg-secondary dark:bg-gray-800 rounded-[20px] items-center justify-center h-[140px]"
+      onPress={handlePress}>
+      <View className="bg-primary dark:bg-tertiary rounded-full">
         <Plus size={60} color="#9ACBD0" />
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};

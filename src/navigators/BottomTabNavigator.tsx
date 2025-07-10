@@ -5,6 +5,7 @@ import MyAppointmentsView from '../views/protected/appointments/MyAppointmentsVi
 import { Home, Calendar, User } from 'lucide-react-native';
 import { View, ViewStyle } from 'react-native';
 import React from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 export type BottomTabParamList = {
   Home: undefined;
@@ -17,11 +18,10 @@ export type BottomTabParamList = {
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-const tabBarIconStyle: ViewStyle = {
+const baseTabBarIconStyle: ViewStyle = {
   width: 80,
   height: 80,
   marginTop: -40,
-  backgroundColor: '#9ACBD0',
   borderRadius: 100,
   shadowColor: '#000',
   shadowOffset: { width: 0, height: 2 },
@@ -30,26 +30,28 @@ const tabBarIconStyle: ViewStyle = {
   alignItems: 'center',
   justifyContent: 'center',
   borderWidth: 1,
-  borderColor: '#006A71'
 };
 
 export const BottomTabNavigator = () => {
+  const { theme } = useTheme();
+  const inactiveColor = theme === 'dark' ? '#9ACBD0' : '#006A71';
+  const tabBarBg = theme === 'dark' ? '#1B1B1B' : '#9ACBD0';
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: '#9ACBD0',
+          backgroundColor: tabBarBg,
           elevation: 0,
           height: 50,
           borderTopWidth: 1,
-          borderColor: '#006A71',
+          borderColor: inactiveColor,
           shadowColor: '#000',
           shadowOffset: { width: 0, height: 3 },
           shadowOpacity: 0.1,
           shadowRadius: 3.84,
         },
         tabBarActiveTintColor: '#fff',
-        tabBarInactiveTintColor: '#006A71',
+        tabBarInactiveTintColor: inactiveColor,
         tabBarShowLabel: false,
         headerShown: false,
       }}
@@ -59,7 +61,16 @@ export const BottomTabNavigator = () => {
         component={HomeView}
         options={{
           tabBarIcon: ({ color, focused }) => (
-            <View style={[tabBarIconStyle, focused && { backgroundColor: '#48A6A7' }]}>
+            <View
+              style={[
+                baseTabBarIconStyle,
+                {
+                  backgroundColor: tabBarBg,
+                  borderColor: inactiveColor,
+                },
+                focused && { backgroundColor: '#48A6A7' },
+              ]}
+            >
               <Home color={color} size={40} />
             </View>
           ),
@@ -70,7 +81,13 @@ export const BottomTabNavigator = () => {
         component={MyAppointmentsView}
         options={{
           tabBarIcon: ({ color, focused }) => (
-            <View style={[tabBarIconStyle, focused && { backgroundColor: '#48A6A7' }]}>
+            <View
+              style={[
+                baseTabBarIconStyle,
+                { backgroundColor: tabBarBg, borderColor: inactiveColor },
+                focused && { backgroundColor: '#48A6A7' },
+              ]}
+            >
               <Calendar color={color} size={40} />
             </View>
           ),
@@ -81,7 +98,13 @@ export const BottomTabNavigator = () => {
         component={ProfileView}
         options={{
           tabBarIcon: ({ color, focused }) => (
-            <View style={[tabBarIconStyle, focused && { backgroundColor: '#48A6A7' }]}>
+            <View
+              style={[
+                baseTabBarIconStyle,
+                { backgroundColor: tabBarBg, borderColor: inactiveColor },
+                focused && { backgroundColor: '#48A6A7' },
+              ]}
+            >
               <User color={color} size={40} />
             </View>
           ),

@@ -22,7 +22,7 @@ export default function CodeInput({ cellsQtty, fillingCallback }: Props) {
 
   return (
     <View className="items-center justify-center mt-8">
-      <Text className="mb-4 text-xl text-primary font-bold">Ingresá el código</Text>
+      <Text className="mb-4 text-xl text-primary dark:text-secondary font-bold">Ingresá el código</Text>
 
       <CodeField
         ref={ref}
@@ -38,10 +38,10 @@ export default function CodeInput({ cellsQtty, fillingCallback }: Props) {
             key={index}
             onLayout={getCellOnLayoutHandler(index)}
             className={`w-12 h-12 border-2 rounded-lg items-center justify-center ${
-              isFocused ? 'border-primary' : 'border-gray-300'
+              isFocused ? 'border-primary dark:border-secondary' : 'border-gray-300 dark:border-gray-500'
             }`}
           >
-            <Text className="text-xl">{symbol || (isFocused ? <Cursor /> : '')}</Text>
+            <Text className="text-xl dark:text-secondary">{symbol || (isFocused ? <Cursor /> : '')}</Text>
           </View>
         )}
       />
