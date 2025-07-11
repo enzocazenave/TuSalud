@@ -30,13 +30,13 @@ export default function AppointmentCard({
   const textColor = theme === "dark" ? "text-darkprimary" : "text-primary";
   const badgeTextColor = theme === "dark" ? "text-black" : "text-black";
   const badgeBackgroundColor = (id: number) => {
-    if (id === 1) return "bg-darkprimary"; // Reservado
+    if (id === 1) return "bg-darkprimary"; 
     if (id === 2) return "bg-red-500/60";
     if (id === 3) return "bg-green-500/60";
     return "";
   };
 
-  const formattedDate = formatUtcToLocalDateTime(appointment.date, timeZone, {
+  const formattedDate = formatUtcToLocalDateTime(appointment.date, 'UTC', {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
