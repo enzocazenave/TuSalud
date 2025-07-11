@@ -28,7 +28,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
         setTheme(initialTheme);
         setColorScheme(initialTheme);
       } catch (e) {
-        console.error('Error loading theme from storage:', e);
       }
     };
 
