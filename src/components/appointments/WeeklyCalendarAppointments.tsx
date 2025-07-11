@@ -133,12 +133,11 @@ export default function WeeklySchedule() {
 
       <FlatList
         data={appointments}
-        contentContainerClassName="gap-4 pb-24"
+        className="flex-1"
+        contentContainerStyle={{ gap: 12, paddingBottom: 96 }}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <SmallAppointmentCard 
-            appointment={item}
-          />
+          <SmallAppointmentCard appointment={item} />
         )}
         keyExtractor={item => item.id.toString()}
         ListEmptyComponent={
