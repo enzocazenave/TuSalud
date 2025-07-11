@@ -79,7 +79,7 @@ export default function WeeklySchedule() {
   };
 
   return (
-    <View className="rounded-xl gap-4">
+    <View className="rounded-xl gap-4 flex-1">
       <View className="flex-row items-center justify-between">
         <TouchableOpacity onPress={goToPreviousWeek} testID='prev-week'>
           <ChevronLeft color={iconColor} size={28} />
@@ -133,10 +133,12 @@ export default function WeeklySchedule() {
 
       <FlatList
         data={appointments}
-        contentContainerStyle={{ gap: 12 }}
+        contentContainerClassName="gap-4 pb-24"
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <SmallAppointmentCard appointment={item} />
+          <SmallAppointmentCard 
+            appointment={item}
+          />
         )}
         keyExtractor={item => item.id.toString()}
         ListEmptyComponent={
