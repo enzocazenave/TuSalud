@@ -20,7 +20,7 @@ const MainApp = () => {
 
   return (
     <React.Fragment>
-      <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
+      <StatusBar barStyle={'light-content'} />
 
       <SafeAreaProvider>
         <SafeAreaView
