@@ -79,79 +79,80 @@ export default function WeeklySchedule() {
   };
 
   return (
-    <View className="rounded-xl gap-4 flex-1">
-      <View className="flex-row items-center justify-between">
-        <TouchableOpacity onPress={goToPreviousWeek} testID='prev-week'>
-          <ChevronLeft color={iconColor} size={28} />
-        </TouchableOpacity>
+    <View className="flex-1">
+      <View className="gap-4">
+        <View className="flex-row items-center justify-between">
+          <TouchableOpacity onPress={goToPreviousWeek} testID='prev-week'>
+            <ChevronLeft color={iconColor} size={28} />
+          </TouchableOpacity>
 
-        <Text className="text-xl font-bold text-primary dark:text-darkprimary">
-          {monthName}
-        </Text>
+          <Text className="text-xl font-bold text-primary dark:text-darkprimary">
+            {monthName}
+          </Text>
 
-        <TouchableOpacity onPress={goToNextWeek} testID='next-week'>
-          <ChevronRight color={iconColor} size={28} />
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={goToNextWeek} testID='next-week'>
+            <ChevronRight color={iconColor} size={28} />
+          </TouchableOpacity>
+        </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerClassName="justify-center items-center w-full"
-      >
-        {days.map((day) => {
-          const isSelected = selectedDate === day.date;
-          const isToday = day.date === getTodayISO();
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerClassName="justify-center items-center w-full h-fit"
+        >
+          {days.map((day) => {
+            const isSelected = selectedDate === day.date;
+            const isToday = day.date === getTodayISO();
 
-          return (
-            <TouchableOpacity
-              key={day.date}
-              onPress={() => handleDayPress(day.date)}
-              className="items-center mx-3"
-            >
-              <Text className="text-sm text-primary dark:text-darkprimary">{day.short}</Text>
-
-              <View
-                className={`w-10 h-10 items-center justify-center mt-1
-                  ${isSelected && !isToday ? 'bg-primary/10 dark:bg-darkprimary/10 rounded-md' : ''}
-                  ${isToday ? 'bg-primary dark:bg-darkprimary rounded-full' : ''}`}
+            return (
+              <TouchableOpacity
+                key={day.date}
+                onPress={() => handleDayPress(day.date)}
+                className="items-center mx-3 mt-3"
               >
-                <Text
-                  className={`text-lg font-bold ${isToday ? 'text-white' : 'text-primary dark:text-darkprimary'}`}
+                <Text className="text-sm text-primary dark:text-darkprimary">{day.short}</Text>
+
+                <View
+                  className={`w-10 h-10 items-center justify-center mt-1
+                    ${isSelected && !isToday ? 'bg-primary/10 dark:bg-darkprimary/10 rounded-md' : ''}
+                    ${isToday ? 'bg-primary dark:bg-darkprimary rounded-full' : ''}`}
                 >
-                  {day.day}
-                </Text>
+                  <Text
+                    className={`text-lg font-bold ${isToday ? 'text-white' : 'text-primary dark:text-darkprimary'}`}
+                  >
+                    {day.day}
+                  </Text>
+                </View>
+
+                {isSelected && (
+                  <View className="h-[2px] w-full bg-primary dark:bg-darkprimary mt-1" />
+                )}
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+
+        <FlatList
+          data={appointments}
+          contentContainerClassName="gap-4 pb-56"
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <SmallAppointmentCard appointment={item} />
+          )}
+          keyExtractor={item => item.id.toString()}
+          ListEmptyComponent={
+            isLoading.appointmentsByDate ? (
+              <View className="items-center justify-center">
+                <ActivityIndicator size="large" color={iconColor} />
               </View>
-
-              {isSelected && (
-                <View className="h-[2px] w-full bg-primary dark:bg-darkprimary mt-1" />
-              )}
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
-
-      <FlatList
-        data={appointments}
-        className="flex-1"
-        contentContainerStyle={{ gap: 12, paddingBottom: 96 }}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <SmallAppointmentCard appointment={item} />
-        )}
-        keyExtractor={item => item.id.toString()}
-        ListEmptyComponent={
-          isLoading.appointmentsByDate ? (
-            <View className="items-center justify-center">
-              <ActivityIndicator size="large" color={iconColor} />
-            </View>
-          ) : (
-            <View className="flex-1 items-center justify-center">
-              <Text className="text-primary dark:text-darkprimary text-lg">No hay turnos</Text>
-            </View>
-          )
-        }
-      />
+            ) : (
+              <View className="flex-1 items-center justify-center">
+                <Text className="text-primary dark:text-darkprimary text-lg">No hay turnos</Text>
+              </View>
+            )
+          }
+        />
+      </View>
     </View>
   );
 }

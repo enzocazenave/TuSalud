@@ -1,4 +1,4 @@
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import GoBackButton from "../../../components/ui/GoBackButton";
 import { useEffect, useState } from "react";
 import useSpecialites from "../../../hooks/useSpecialites";
@@ -36,57 +36,61 @@ export default function NewAppointmentSelectSpecialityView() {
   const iconColor = theme === "dark" ? "#5CC8D7" : "#006A71";
 
   return (
-    <View className="pt-9 px-5 gap-8 bg-quaternary dark:bg-darksecondary flex-1">
-      <View className="flex-row items-center justify-between">
-        <GoBackButton callback={() => {
-          setSpecialty({});
-          setSelectedSpecialty(null);
-        }} />
-        <Text className="text-primary dark:text-darkprimary text-lg">Paso 2 de 5</Text>
-      </View>
+    <View className="flex-1  bg-quaternary dark:bg-darksecondary">
 
-      <NewAppointmentStatus />
+      <ScrollView contentContainerClassName="pt-9 px-5 gap-8 pb-24">
+        <View className="flex-row items-center justify-between">
+          <GoBackButton callback={() => {
+            setSpecialty({});
+            setSelectedSpecialty(null);
+          }} />
+          <Text className="text-primary dark:text-darkprimary text-lg">Paso 2 de 5</Text>
+        </View>
 
-      <View className="gap-4">
-        <Text className="text-3xl text-primary dark:text-darkprimary font-bold">Seleccionar especialidad</Text>
+        <NewAppointmentStatus />
 
-        {isLoading.specialties ? (
-          <View className="items-center justify-center py-4">
-            <ActivityIndicator size="large" color={iconColor} />
-          </View>
-        ) : (
-          <FlatList
-            contentContainerClassName="gap-4"
-            data={specialties}
-            renderItem={({ item }: { item: any }) => (
-              <TouchableOpacity
-                onPress={() => handleSelectSpecialty(item)}
-                className={`flex-row items-center border gap-4 px-4 py-2 rounded-lg 
-                  ${selectedSpecialty?.id === item?.id
-                    ? "bg-secondary dark:bg-darksecondary border-primary dark:border-darkprimary"
-                    : "bg-secondary/30 dark:bg-darktertiary/30 border-transparent"
-                  }`}
-              >
-                {selectedSpecialty?.id === item?.id ? (
-                  <CircleCheck size={20} color={iconColor} />
-                ) : (
-                  <Circle size={20} color={iconColor} />
-                )}
-                <Text className="text-primary dark:text-darkprimary text-lg">{item?.name}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        )}
-      </View>
+        <View className="gap-4">
+          <Text className="text-3xl text-primary dark:text-darkprimary font-bold">Seleccionar especialidad</Text>
 
-      <Button
-        disabled={!selectedSpecialty}
-        className={!selectedSpecialty
-          ? "opacity-50 border-primary/50 dark:border-darkprimary/50 font-semibold"
-          : ""}
-        text="Continuar"
-        onPress={handleContinue}
-      />
+          {isLoading.specialties ? (
+            <View className="items-center justify-center py-4">
+              <ActivityIndicator size="large" color={iconColor} />
+            </View>
+          ) : (
+            <FlatList
+              contentContainerClassName="gap-4"
+              scrollEnabled={false}
+              data={specialties}
+              renderItem={({ item }: { item: any }) => (
+                <TouchableOpacity
+                  onPress={() => handleSelectSpecialty(item)}
+                  className={`flex-row items-center border gap-4 px-4 py-2 rounded-lg 
+                    ${selectedSpecialty?.id === item?.id
+                      ? "bg-secondary dark:bg-darksecondary border-primary dark:border-darkprimary"
+                      : "bg-secondary/30 dark:bg-darktertiary/30 border-transparent"
+                    }`}
+                >
+                  {selectedSpecialty?.id === item?.id ? (
+                    <CircleCheck size={20} color={iconColor} />
+                  ) : (
+                    <Circle size={20} color={iconColor} />
+                  )}
+                  <Text className="text-primary dark:text-darkprimary text-lg">{item?.name}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          )}
+        </View>
+
+        <Button
+          disabled={!selectedSpecialty}
+          className={!selectedSpecialty
+            ? "opacity-50 border-primary/50 dark:border-darkprimary/50 font-semibold"
+            : ""}
+          text="Continuar"
+          onPress={handleContinue}
+        />
+      </ScrollView>
     </View>
   );
 }
